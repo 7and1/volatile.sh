@@ -25,6 +25,11 @@ jobs:
       - name: Build frontend
         run: npm run build:front
 
+      - name: Create wrangler.toml from example
+        run: |
+          cp wrangler.toml.example wrangler.toml
+          echo "account_id = \"${{ secrets.CLOUDFLARE_ACCOUNT_ID }}\"" >> wrangler.toml
+
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
         with:
