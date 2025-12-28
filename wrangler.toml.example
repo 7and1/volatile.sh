@@ -6,27 +6,26 @@ compatibility_date = "2024-12-01"
 # or copied from this example to wrangler.toml (not tracked in git)
 # account_id = "YOUR_ACCOUNT_ID_HERE"
 
+# Custom domain routes
+routes = [
+  { pattern = "volatile.sh", custom_domain = true },
+  { pattern = "www.volatile.sh", custom_domain = true }
+]
+
 # Serve static files from /public
 [assets]
 directory = "./dist"
 
-# Durable Object binding
+# Durable Object bindings
 [[durable_objects.bindings]]
 name = "SECRETS"
 class_name = "SecretStore"
 
-# Rate Limiter Durable Object binding
 [[durable_objects.bindings]]
 name = "RATE_LIMIT"
 class_name = "RateLimiter"
 
-# Custom domain
-routes = [
-  { pattern = "volatile.sh/*", custom_domain = true },
-  { pattern = "www.volatile.sh/*", custom_domain = true }
-]
-
-# Durable Object migration (required for first deploy)
+# Durable Object migrations (required for first deploy)
 [[migrations]]
 tag = "v1"
 new_classes = ["SecretStore"]
