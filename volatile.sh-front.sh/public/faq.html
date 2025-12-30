@@ -11,6 +11,178 @@
     <meta name="robots" content="index,follow" />
     <meta name="theme-color" content="#050505" />
     <link rel="canonical" href="https://volatile.sh/faq.html" />
+
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>"
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="FAQ - volatile.sh" />
+    <meta
+      property="og:description"
+      content="Frequently asked questions about volatile.sh - zero-knowledge secret sharing with burn-after-reading security."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://volatile.sh/faq.html" />
+    <meta property="og:site_name" content="volatile.sh" />
+    <meta property="og:image" content="https://volatile.sh/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="FAQ - volatile.sh" />
+    <meta
+      name="twitter:description"
+      content="Frequently asked questions about volatile.sh - zero-knowledge secret sharing."
+    />
+    <meta name="twitter:image" content="https://volatile.sh/og-image.png" />
+    <meta name="author" content="volatile.sh Team" />
+
+    <!-- FAQPage Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How secure is volatile.sh?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "volatile.sh uses AES-256-GCM encryption, the same standard used by governments and militaries worldwide. Your secret is encrypted in your browser before it ever leaves your device. The decryption key is stored in the URL fragment, which browsers never send to servers."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can you see my secrets?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Zero-knowledge means we have zero knowledge of your data. Your secret is encrypted client-side, the key is in the URL fragment never sent to our server, we only store encrypted ciphertext, and even if compelled by law, we could not decrypt your data."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens if I lose the link?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Your secret is permanently lost. The link contains the decryption key. If you lose it, there is no recovery mechanism. This is intentional for security."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why use this instead of email or Slack?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Email and chat platforms store your messages forever on their servers. volatile.sh stores nothing permanently, destroys messages after reading, requires no account, and works with any web browser."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the maximum secret size?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Approximately 1MB of text after encryption, which is about 500,000 words or roughly the length of a short novel."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is volatile.sh open source?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! The source code is available on GitHub. You can review it, run your own instance, or contribute. Transparency is essential for security tools."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I self-host volatile.sh?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. volatile.sh is built on Cloudflare Workers and Durable Objects, which you can deploy to your own Cloudflare account."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is the decryption key really never sent to the server?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The fragment (everything after the #) is never included in HTTP requests. This is a fundamental property of how URLs work per RFC 3986."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is volatile.sh better than PrivNote?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "volatile.sh is open source, uses zero-knowledge architecture, stores data in ephemeral RAM only, and provides full transparency. Unlike PrivNote, you can verify our security by reviewing the code."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I share a password securely?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Paste your password into volatile.sh, set an expiration time, then send the generated link through a separate channel like email or chat. The recipient clicks the link to view the password, which is immediately deleted after reading."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use volatile.sh for API keys?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, volatile.sh is perfect for sharing API keys, tokens, and other sensitive credentials. The encrypted storage and auto-deletion ensure your keys are never permanently stored on any server."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long do secrets last?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You can set expiration from 5 minutes to 7 days. Once read, secrets are immediately deleted (burn-after-reading). Unread secrets automatically expire after your chosen time limit."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is volatile.sh free to use?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, volatile.sh is completely free. No registration, no limits, no premium tier. The service is funded by the open-source community."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What encryption algorithm does volatile.sh use?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "volatile.sh uses AES-256-GCM (Advanced Encryption Standard with Galois/Counter Mode), authenticated encryption that provides both confidentiality and integrity. Keys are generated using Web Crypto API with 256-bit entropy."
+            }
+          }
+        ]
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://volatile.sh/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "FAQ",
+            "item": "https://volatile.sh/faq.html"
+          }
+        ]
+      }
+    </script>
+
     <style>
       :root {
         --bg: #050505;
@@ -28,8 +200,7 @@
         padding: 1.5rem;
         background: var(--bg);
         color: var(--fg);
-        font-family:
-          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         line-height: 1.7;
       }
       .container {
@@ -119,43 +290,32 @@
 
       <h2>How secure is volatile.sh?</h2>
       <p>
-        volatile.sh uses <strong>AES-256-GCM encryption</strong>, the same
-        standard used by governments and militaries worldwide. Your secret is
-        encrypted <strong>in your browser</strong> before it ever leaves your
-        device. The decryption key is stored in the URL fragment (the part after
-        <code>#</code>), which browsers never send to servers. This means we
-        literally cannot read your secrets.
+        volatile.sh uses <strong>AES-256-GCM encryption</strong>, the same standard used by
+        governments and militaries worldwide. Your secret is encrypted
+        <strong>in your browser</strong> before it ever leaves your device. The decryption key is
+        stored in the URL fragment (the part after <code>#</code>), which browsers never send to
+        servers. This means we literally cannot read your secrets.
       </p>
 
       <h2>Can you see my secrets?</h2>
-      <p>
-        <strong>No.</strong> Zero-knowledge means we have zero knowledge of your
-        data.
-      </p>
+      <p><strong>No.</strong> Zero-knowledge means we have zero knowledge of your data.</p>
       <ul>
         <li>Your secret is encrypted client-side using Web Crypto API</li>
-        <li>
-          The encryption key is in the URL fragment, never sent to our server
-        </li>
-        <li>
-          We only store encrypted ciphertext, which is useless without the key
-        </li>
-        <li>
-          Even if we were compelled by law, we could not decrypt your data
-        </li>
+        <li>The encryption key is in the URL fragment, never sent to our server</li>
+        <li>We only store encrypted ciphertext, which is useless without the key</li>
+        <li>Even if we were compelled by law, we could not decrypt your data</li>
       </ul>
 
       <h2>What happens if I lose the link?</h2>
       <p>
-        <strong>Your secret is permanently lost.</strong> The link contains the
-        decryption key. If you lose it, there is no recovery mechanism. This is
-        intentional for security.
+        <strong>Your secret is permanently lost.</strong> The link contains the decryption key. If
+        you lose it, there is no recovery mechanism. This is intentional for security.
       </p>
 
       <h2>Why use this instead of email/Slack?</h2>
       <p>
-        Email and chat platforms store your messages forever on their servers.
-        They can be subpoenaed, breached, or mined for advertising. volatile.sh:
+        Email and chat platforms store your messages forever on their servers. They can be
+        subpoenaed, breached, or mined for advertising. volatile.sh:
       </p>
       <ul>
         <li>Stores nothing permanently (ephemeral RAM-only storage)</li>
@@ -166,18 +326,16 @@
 
       <h2>Can I password-protect my secret?</h2>
       <p>
-        The link itself acts as authentication. Anyone with the full link
-        (including the fragment) can decrypt the secret. Treat the link like the
-        secret itself. For additional security, share the link through a secure
-        channel (encrypted messaging, in person, etc.).
+        The link itself acts as authentication. Anyone with the full link (including the fragment)
+        can decrypt the secret. Treat the link like the secret itself. For additional security,
+        share the link through a secure channel (encrypted messaging, in person, etc.).
       </p>
 
       <h2>What's the maximum secret size?</h2>
       <p>
-        Approximately <strong>1MB of text</strong> after encryption. This is
-        about 500,000 words or roughly the length of a short novel. For most use
-        cases (API keys, passwords, confidential messages), this is more than
-        sufficient.
+        Approximately <strong>1MB of text</strong> after encryption. This is about 500,000 words or
+        roughly the length of a short novel. For most use cases (API keys, passwords, confidential
+        messages), this is more than sufficient.
       </p>
 
       <h2>Do you log anything?</h2>
@@ -185,60 +343,51 @@
       <ul>
         <li>Rate limit counters (hashed IP addresses, stored in RAM only)</li>
         <li>Request metrics for capacity planning</li>
-        <li>
-          <strong>We do not log:</strong> secret content, keys, or personal
-          identifiers
-        </li>
+        <li><strong>We do not log:</strong> secret content, keys, or personal identifiers</li>
       </ul>
 
       <h2>Is this open source?</h2>
       <p>
-        Yes! The source code is available on GitHub. You can review it, run your
-        own instance, or contribute. Transparency is essential for security
-        tools.
+        Yes! The source code is available on GitHub. You can review it, run your own instance, or
+        contribute. Transparency is essential for security tools.
       </p>
 
       <h2>Can I self-host this?</h2>
       <p>
-        Yes. volatile.sh is built on Cloudflare Workers and Durable Objects,
-        which you can deploy to your own Cloudflare account. See the
+        Yes. volatile.sh is built on Cloudflare Workers and Durable Objects, which you can deploy to
+        your own Cloudflare account. See the
         <a href="/docs.html">documentation</a>
         for setup instructions.
       </p>
 
       <h2>What if volatile.sh shuts down?</h2>
       <p>
-        All secrets have a maximum TTL of 7 days. Even if the service shut down
-        immediately, any unread secrets would simply expire and be deleted. Your
-        secrets are not dependent on our long-term existence.
+        All secrets have a maximum TTL of 7 days. Even if the service shut down immediately, any
+        unread secrets would simply expire and be deleted. Your secrets are not dependent on our
+        long-term existence.
       </p>
 
       <h2>How are secrets deleted?</h2>
       <p>
-        Secrets are stored in Cloudflare Durable Objects with an automatic
-        expiration alarm. When a secret is read, it is immediately deleted from
-        the DO storage. Unread secrets are automatically deleted when their TTL
-        expires. This is enforced at the platform level and cannot be bypassed.
+        Secrets are stored in Cloudflare Durable Objects with an automatic expiration alarm. When a
+        secret is read, it is immediately deleted from the DO storage. Unread secrets are
+        automatically deleted when their TTL expires. This is enforced at the platform level and
+        cannot be bypassed.
       </p>
 
       <h2>Is the decryption key really never sent to the server?</h2>
       <p>
-        Yes. This is a fundamental property of how URLs work. The fragment
-        (everything after the <code>#</code>) is
-        <strong>never included in HTTP requests</strong>. You can verify this
-        yourself by opening your browser's developer tools and watching the
-        network requests when creating or reading a secret—the fragment is
-        nowhere to be found.
+        Yes. This is a fundamental property of how URLs work. The fragment (everything after the
+        <code>#</code>) is <strong>never included in HTTP requests</strong>. You can verify this
+        yourself by opening your browser's developer tools and watching the network requests when
+        creating or reading a secret—the fragment is nowhere to be found.
       </p>
 
       <div class="warning">
         <p><strong>Security Reminders:</strong></p>
         <p>• Anyone with the link can read the secret—share it securely</p>
         <p>• Browser extensions or screen recorders can capture your content</p>
-        <p>
-          • Link previews in chat apps may send the URL to their servers (use
-          caution)
-        </p>
+        <p>• Link previews in chat apps may send the URL to their servers (use caution)</p>
       </div>
 
       <p class="muted" style="margin-top: 2rem">

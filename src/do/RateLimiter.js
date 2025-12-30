@@ -14,14 +14,12 @@ export class RateLimiter {
 
   async check(request) {
     const { key, limit, windowMs } = await request.json();
-    if (typeof key !== "string" || !key)
-      return json({ allowed: false, error: "BAD_KEY" }, 400);
+    if (typeof key !== "string" || !key) return json({ allowed: false, error: "BAD_KEY" }, 400);
 
     const now = Date.now();
     const max = Number.isFinite(Number(limit)) ? Number(limit) : 0;
     const window = Number.isFinite(Number(windowMs)) ? Number(windowMs) : 0;
-    if (max <= 0 || window <= 0)
-      return json({ allowed: false, error: "BAD_LIMIT" }, 400);
+    if (max <= 0 || window <= 0) return json({ allowed: false, error: "BAD_LIMIT" }, 400);
 
     const entry = await this.storage.get(key);
     let count = entry?.count || 0;
@@ -36,16 +34,9 @@ export class RateLimiter {
     const allowed = count <= max;
     const remaining = Math.max(0, max - count);
 
-    await this.storage.put(
-      key,
-      { count, resetAt },
-      { expiration: Math.ceil(resetAt / 1000) },
-    );
+    await this.storage.put(key, { count, resetAt }, { expiration: Math.ceil(resetAt / 1000) });
 
-    return json(
-      { allowed, limit: max, remaining, resetAt },
-      allowed ? 200 : 429,
-    );
+    return json({ allowed, limit: max, remaining, resetAt, count }, allowed ? 200 : 429);
   }
 }
 

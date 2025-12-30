@@ -8,10 +8,7 @@ export function bytesToB64Url(bytes: Uint8Array): string {
     binary += String.fromCharCode(...bytes.subarray(i, i + CHUNK));
   }
 
-  return btoa(binary)
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=+$/g, "");
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
 }
 
 export function b64UrlToBytes(b64url: string): Uint8Array {
@@ -29,27 +26,23 @@ export function b64UrlToBytes(b64url: string): Uint8Array {
  * Generate a new AES-GCM key
  */
 export async function generateKey(): Promise<CryptoKey> {
-  return window.crypto.subtle.generateKey(
-    { name: "AES-GCM", length: 256 },
-    true,
-    ["encrypt", "decrypt"],
-  );
+  return window.crypto.subtle.generateKey({ name: "AES-GCM", length: 256 }, true, [
+    "encrypt",
+    "decrypt",
+  ]);
 }
 
 /**
  * Encrypt text with a key
  */
-export async function encryptMessage(
-  text: string,
-  key: CryptoKey,
-): Promise<EncryptedPayload> {
+export async function encryptMessage(text: string, key: CryptoKey): Promise<EncryptedPayload> {
   const iv = window.crypto.getRandomValues(new Uint8Array(12));
   const encodedText = new TextEncoder().encode(text);
 
   const ciphertext = await window.crypto.subtle.encrypt(
     { name: "AES-GCM", iv: iv },
     key,
-    encodedText,
+    encodedText
   );
 
   return {
@@ -61,14 +54,11 @@ export async function encryptMessage(
 /**
  * Decrypt content with a key
  */
-export async function decryptMessage(
-  payload: EncryptedPayload,
-  key: CryptoKey,
-): Promise<string> {
+export async function decryptMessage(payload: EncryptedPayload, key: CryptoKey): Promise<string> {
   const decrypted = await window.crypto.subtle.decrypt(
     { name: "AES-GCM", iv: b64UrlToBytes(payload.iv) },
     key,
-    b64UrlToBytes(payload.content),
+    b64UrlToBytes(payload.content)
   );
 
   return new TextDecoder().decode(decrypted);
@@ -79,17 +69,9 @@ export async function exportKeyToB64Url(key: CryptoKey): Promise<string> {
   return bytesToB64Url(raw);
 }
 
-export async function importKeyFromB64Url(
-  keyB64Url: string,
-): Promise<CryptoKey> {
+export async function importKeyFromB64Url(keyB64Url: string): Promise<CryptoKey> {
   const raw = b64UrlToBytes(keyB64Url);
-  return window.crypto.subtle.importKey(
-    "raw",
-    raw,
-    { name: "AES-GCM" },
-    false,
-    ["decrypt"],
-  );
+  return window.crypto.subtle.importKey("raw", raw, { name: "AES-GCM" }, false, ["decrypt"]);
 }
 
 /**

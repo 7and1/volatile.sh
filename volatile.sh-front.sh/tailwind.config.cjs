@@ -10,10 +10,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "term-green": "#33ff00",
-        "term-green-dim": "#1a8000",
-        "term-bg": "#050505",
-        "term-panel": "#0a0a0a",
+        "term-green": "var(--term-green)",
+        "term-green-dim": "var(--term-green-dim)",
+        "term-bg": "var(--term-bg)",
+        "term-panel": "var(--term-panel)",
       },
       fontFamily: {
         mono: ['"VT323"', "monospace"],
@@ -31,6 +31,15 @@ module.exports = {
           "0%": { opacity: "0.97" },
           "100%": { opacity: "1" },
         },
+      },
+      // Mobile-first responsive utilities
+      screens: {
+        xs: "475px",
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+        "2xl": "1536px",
       },
     },
   },

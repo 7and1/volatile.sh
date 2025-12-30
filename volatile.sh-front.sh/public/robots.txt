@@ -1,5 +1,31 @@
 User-agent: *
 Allow: /
+Crawl-delay: 1
 
+# API endpoints - do not crawl
+Disallow: /api/
+Disallow: /api/v1/
+
+# Admin and system paths
+Disallow: /admin/
+Disallow: /.well-known/
+
+# Allow important pages
+Allow: /about.html
+Allow: /api.html
+Allow: /blog.html
+Allow: /changelog.html
+Allow: /comparison.html
+Allow: /docs.html
+Allow: /faq.html
+Allow: /privacy.html
+Allow: /security.html
+Allow: /terms.html
+Allow: /use-cases.html
+Allow: /compare/
+
+# Sitemaps
 Sitemap: https://volatile.sh/sitemap.xml
 
+# RSS Feed
+Host: volatile.sh

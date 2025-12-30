@@ -15,17 +15,21 @@ export class SecretStore {
       return this.read();
     }
 
+    if (url.pathname === "/validate" && request.method === "GET") {
+      return this.validate();
+    }
+
     return new Response("Not found", { status: 404 });
   }
 
   async store(request) {
     const { encrypted, iv, expiresAt } = await request.json();
+    const createdAt = Date.now();
 
     const res = await this.storage.transaction(async (txn) => {
       const existing = await txn.get("secret");
-      if (existing)
-        return { status: 409, body: { error: "Secret ID collision" } };
-      await txn.put("secret", { encrypted, iv, expiresAt });
+      if (existing) return { status: 409, body: { error: "Secret ID collision" } };
+      await txn.put("secret", { encrypted, iv, expiresAt, createdAt });
       return { status: 200, body: { ok: true } };
     });
 
@@ -65,6 +69,28 @@ export class SecretStore {
 
   async alarm() {
     await this.storage.delete("secret");
+  }
+
+  async validate() {
+    const secret = await this.storage.get("secret");
+
+    if (!secret) {
+      return json({ error: "Secret not found or already burned" }, 404);
+    }
+
+    const now = Date.now();
+    if (now > secret.expiresAt) {
+      await this.storage.delete("secret");
+      return json({ error: "Secret expired", status: "expired" }, 410);
+    }
+
+    const ttl = secret.expiresAt - now;
+    return json({
+      status: "ready",
+      createdAt: secret.createdAt,
+      expiresAt: secret.expiresAt,
+      ttl,
+    });
   }
 }
 

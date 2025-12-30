@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Changelog - volatile.sh</title>
+    <meta
+      name="description"
+      content="volatile.sh changelog - product updates, security announcements, and new features."
+    />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#050505" />
+    <link rel="canonical" href="https://volatile.sh/changelog.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Changelog - volatile.sh" />
+    <meta
+      property="og:description"
+      content="Stay updated with the latest changes to volatile.sh."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://volatile.sh/changelog.html" />
+    <meta property="og:site_name" content="volatile.sh" />
+    <meta property="og:image" content="https://volatile.sh/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Changelog - volatile.sh" />
+    <meta name="twitter:description" content="Product updates and announcements." />
+    <meta name="twitter:image" content="https://volatile.sh/og-image.png" />
+    <meta name="author" content="volatile.sh Team" />
+
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://volatile.sh/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Changelog",
+            "item": "https://volatile.sh/changelog.html"
+          }
+        ]
+      }
+    </script>
+
+    <style>
+      :root {
+        --bg: #050505;
+        --fg: #33ff00;
+        --dim: #1a8000;
+        --dimmer: #0c3d00;
+        --red: #ef4444;
+        --blue: #3b82f6;
+        --yellow: #fbbf24;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 1.5rem;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      header {
+        margin-bottom: 2rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid var(--dimmer);
+      }
+      h1 {
+        font-size: 1.8rem;
+        margin: 0 0 0.5rem 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      .tagline {
+        font-size: 0.85rem;
+        opacity: 0.7;
+      }
+      h2 {
+        font-size: 1.2rem;
+        margin: 2.5rem 0 1rem 0;
+        padding-bottom: 0.25rem;
+        border-bottom: 1px solid var(--dimmer);
+      }
+      h3 {
+        font-size: 1rem;
+        margin: 1.5rem 0 0.75rem 0;
+      }
+      p,
+      li {
+        opacity: 0.9;
+        font-size: 0.93rem;
+      }
+      a {
+        color: var(--dim);
+        text-decoration: none;
+      }
+      a:hover {
+        color: var(--fg);
+        text-decoration: underline;
+      }
+      .muted {
+        color: var(--dim);
+      }
+      code {
+        color: var(--fg);
+        background: var(--dimmer);
+        padding: 0.15rem 0.4rem;
+        font-size: 0.9em;
+      }
+      .nav {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 0.85rem;
+      }
+      .nav a {
+        margin: 0 0.5rem;
+        opacity: 0.7;
+      }
+      .nav a:hover {
+        opacity: 1;
+      }
+      .entry {
+        border-left: 3px solid var(--dim);
+        padding-left: 1.5rem;
+        margin-bottom: 2rem;
+        position: relative;
+      }
+      .entry::before {
+        content: "";
+        position: absolute;
+        left: -8px;
+        top: 0;
+        width: 14px;
+        height: 14px;
+        background: var(--bg);
+        border: 2px solid var(--fg);
+        border-radius: 50%;
+      }
+      .entry-date {
+        font-size: 0.85rem;
+        color: var(--dim);
+        margin-bottom: 0.5rem;
+      }
+      .entry-title {
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-bottom: 0.75rem;
+        color: var(--fg);
+      }
+      .entry-content {
+        margin-top: 0.5rem;
+      }
+      .entry-content ul {
+        margin: 0.5rem 0;
+        padding-left: 1.5rem;
+      }
+      .entry-content li {
+        margin-bottom: 0.3rem;
+      }
+      .badge {
+        display: inline-block;
+        padding: 0.15rem 0.5rem;
+        font-size: 0.75rem;
+        margin-left: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .badge-new {
+        background: var(--fg);
+        color: var(--bg);
+      }
+      .badge-fix {
+        background: var(--blue);
+        color: white;
+      }
+      .badge-security {
+        background: var(--red);
+        color: white;
+      }
+      .badge-feature {
+        background: var(--yellow);
+        color: var(--bg);
+      }
+      .rss-link {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background: var(--dimmer);
+        margin-top: 1rem;
+        border: 1px solid var(--dim);
+      }
+      .rss-link:hover {
+        border-color: var(--fg);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="nav">
+        <a href="/">[ HOME ]</a>
+        <a href="/docs.html">[ DOCS ]</a>
+        <a href="/api.html">[ API ]</a>
+        <a href="/security.html">[ SECURITY ]</a>
+        <a href="/comparison.html">[ COMPARE ]</a>
+      </div>
+
+      <header>
+        <h1>&gt; CHANGELOG</h1>
+        <p class="tagline">Product updates, security announcements, and new features</p>
+      </header>
+
+      <p style="margin-bottom: 2rem">
+        Stay informed about changes to volatile.sh. We document all notable updates, new features,
+        bug fixes, and security announcements here.
+      </p>
+
+      <h2>2024</h2>
+
+      <div class="entry">
+        <div class="entry-date">December 2024</div>
+        <div class="entry-title">
+          Initial Public Launch <span class="badge badge-new">NEW</span>
+        </div>
+        <div class="entry-content">
+          <p>volatile.sh is now publicly available! Here's what we're launching with:</p>
+          <ul>
+            <li>Zero-knowledge secret sharing with AES-256-GCM encryption</li>
+            <li>Burn-after-reading functionality</li>
+            <li>Flexible TTL options (5 minutes to 7 days)</li>
+            <li>Rate limiting to prevent abuse</li>
+            <li>RESTful API for programmatic access</li>
+            <li>Fully open-source (MIT licensed)</li>
+            <li>Self-hosting support via Cloudflare Workers</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>Upcoming</h2>
+
+      <div class="entry" style="border-left-color: var(--dim)">
+        <div class="entry-date">Q1 2025</div>
+        <div class="entry-title">Planned Features</div>
+        <div class="entry-content">
+          <p>We're actively working on these features:</p>
+          <ul>
+            <li>File upload support (encrypted file sharing)</li>
+            <li>Optional password protection for additional security</li>
+            <li>CLI tool for terminal-based secret sharing</li>
+            <li>Browser extensions for quick access</li>
+            <li>Webhook notifications when secrets are read</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2>Security Announcements</h2>
+
+      <div class="entry" style="border-left-color: var(--red)">
+        <div class="entry-date">Ongoing</div>
+        <div class="entry-title">Bug Bounty Program</div>
+        <div class="entry-content">
+          <p>
+            We believe in responsible disclosure. If you discover a security vulnerability, please
+            report it to us:
+          </p>
+          <ul>
+            <li>Email: security@volatile.sh</li>
+            <li>PGP: Available on request</li>
+            <li>Response time: Within 48 hours</li>
+          </ul>
+          <p>
+            We offer bug bounties for critical security findings. Please review our
+            <a href="/security.html">security documentation</a> for details.
+          </p>
+        </div>
+      </div>
+
+      <h2>Archived Announcements</h2>
+
+      <div class="entry" style="border-left-color: var(--dim)">
+        <div class="entry-date">Development</div>
+        <div class="entry-title">Project Origins</div>
+        <div class="entry-content">
+          <p>
+            volatile.sh was created to address the need for a truly zero-knowledge, open-source
+            secret sharing service. We built it on Cloudflare Workers and Durable Objects for global
+            performance and reliability.
+          </p>
+        </div>
+      </div>
+
+      <div class="rss-link">
+        <a href="/rss.xml">📡 Subscribe via RSS</a>
+      </div>
+
+      <h2>Stay Connected</h2>
+      <p>Follow our progress and get notified of updates:</p>
+      <ul>
+        <li>
+          <a href="https://github.com/user/volatile.sh" target="_blank" rel="noopener">GitHub</a> -
+          Star the repo, watch for releases
+        </li>
+        <li><a href="/rss.xml">RSS Feed</a> - Subscribe to updates</li>
+        <li>
+          <a href="https://x.com/volatilesh" target="_blank" rel="noopener">Twitter/X</a> - Follow
+          for announcements
+        </li>
+      </ul>
+
+      <h2>Version History</h2>
+      <table style="width: 100%; border-collapse: collapse; margin-top: 1rem">
+        <thead>
+          <tr style="border-bottom: 1px solid var(--dimmer)">
+            <th style="padding: 0.75rem; text-align: left">Version</th>
+            <th style="padding: 0.75rem; text-align: left">Date</th>
+            <th style="padding: 0.75rem; text-align: left">Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--dimmer)">
+            <td style="padding: 0.75rem">v1.0.0</td>
+            <td style="padding: 0.75rem">December 2024</td>
+            <td style="padding: 0.75rem">Initial public release</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="muted" style="margin-top: 2rem">
+        <a href="/">← Back to volatile.sh</a> ·
+        <a href="/security.html">Security →</a>
+      </p>
+    </div>
+  </body>
+</html>

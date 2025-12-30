@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog - volatile.sh</title>
+    <meta
+      name="description"
+      content="Blog - articles about zero-knowledge encryption, secure communication, privacy best practices, and volatile.sh updates."
+    />
+    <meta
+      name="keywords"
+      content="volatile.sh blog, zero-knowledge encryption, secure communication, privacy, security best practices"
+    />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#050505" />
+    <link rel="canonical" href="https://volatile.sh/blog.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Blog - volatile.sh" />
+    <meta
+      property="og:description"
+      content="Articles about zero-knowledge encryption, secure communication, and privacy best practices."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://volatile.sh/blog.html" />
+    <meta property="og:site_name" content="volatile.sh" />
+    <meta property="og:image" content="https://volatile.sh/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Blog - volatile.sh" />
+    <meta
+      name="twitter:description"
+      content="Articles about zero-knowledge encryption and privacy."
+    />
+    <meta name="twitter:image" content="https://volatile.sh/og-image.png" />
+    <meta name="author" content="volatile.sh Team" />
+
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "volatile.sh Blog",
+        "description": "Articles about zero-knowledge encryption, secure communication, and privacy best practices",
+        "url": "https://volatile.sh/blog.html",
+        "publisher": {
+          "@type": "Organization",
+          "name": "volatile.sh",
+          "url": "https://volatile.sh/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://volatile.sh/og-image.png"
+          }
+        }
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "volatile.sh Blog Articles",
+        "description": "Upcoming articles about zero-knowledge encryption and privacy",
+        "numberOfItems": 10,
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "Understanding Zero-Knowledge Architecture",
+              "description": "A comprehensive guide to zero-knowledge proofs and how they enable truly private services.",
+              "author": { "@type": "Organization", "name": "volatile.sh" },
+              "publisher": { "@type": "Organization", "name": "volatile.sh" },
+              "keywords": ["Encryption", "Architecture", "Zero-Knowledge"]
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "AES-256-GCM Explained: Why This Encryption Standard?",
+              "description": "Deep dive into AES-256-GCM: why we chose it, how authenticated encryption works, and why the GCM mode matters for integrity.",
+              "author": { "@type": "Organization", "name": "volatile.sh" },
+              "publisher": { "@type": "Organization", "name": "volatile.sh" },
+              "keywords": ["Cryptography", "AES", "Security"]
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "Building on Cloudflare Workers: Lessons Learned",
+              "description": "Our experience building volatile.sh on Cloudflare Workers and Durable Objects.",
+              "author": { "@type": "Organization", "name": "volatile.sh" },
+              "publisher": { "@type": "Organization", "name": "volatile.sh" },
+              "keywords": ["Cloudflare", "Serverless", "Engineering"]
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "URL Fragments: The Secret to Zero-Knowledge Web Apps",
+              "description": "How RFC 3986's URL fragment specification enables zero-knowledge web applications.",
+              "author": { "@type": "Organization", "name": "volatile.sh" },
+              "publisher": { "@type": "Organization", "name": "volatile.sh" },
+              "keywords": ["HTTP", "Privacy", "Web Development"]
+            }
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "item": {
+              "@type": "BlogPosting",
+              "headline": "Comparing Secret Sharing: PrivNote vs volatile.sh vs OneTimeSecret",
+              "description": "An in-depth comparison of popular secret-sharing services analyzing encryption models and security.",
+              "author": { "@type": "Organization", "name": "volatile.sh" },
+              "publisher": { "@type": "Organization", "name": "volatile.sh" },
+              "keywords": ["Comparison", "Security", "Privacy"]
+            }
+          }
+        ]
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://volatile.sh/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Blog",
+            "item": "https://volatile.sh/blog.html"
+          }
+        ]
+      }
+    </script>
+
+    <style>
+      :root {
+        --bg: #050505;
+        --fg: #33ff00;
+        --dim: #1a8000;
+        --dimmer: #0c3d00;
+        --blue: #3b82f6;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 1.5rem;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        line-height: 1.7;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      header {
+        margin-bottom: 2rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid var(--dimmer);
+      }
+      h1 {
+        font-size: 1.8rem;
+        margin: 0 0 0.5rem 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      .tagline {
+        font-size: 0.85rem;
+        opacity: 0.7;
+      }
+      h2 {
+        font-size: 1.2rem;
+        margin: 2.5rem 0 1rem 0;
+        padding-bottom: 0.25rem;
+        border-bottom: 1px solid var(--dimmer);
+      }
+      p,
+      li {
+        opacity: 0.9;
+        font-size: 0.93rem;
+      }
+      a {
+        color: var(--dim);
+        text-decoration: none;
+      }
+      a:hover {
+        color: var(--fg);
+        text-decoration: underline;
+      }
+      .muted {
+        color: var(--dim);
+      }
+      code {
+        color: var(--fg);
+        background: var(--dimmer);
+        padding: 0.15rem 0.4rem;
+        font-size: 0.9em;
+      }
+      .nav {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 0.85rem;
+      }
+      .nav a {
+        margin: 0 0.5rem;
+        opacity: 0.7;
+      }
+      .nav a:hover {
+        opacity: 1;
+      }
+      .article-card {
+        background: var(--dimmer);
+        border: 1px solid var(--dim);
+        padding: 1.5rem;
+        margin: 1rem 0;
+        border-radius: 4px;
+      }
+      .article-card h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.1rem;
+      }
+      .article-meta {
+        font-size: 0.8rem;
+        color: var(--dim);
+        margin-bottom: 0.75rem;
+      }
+      .article-card p {
+        margin: 0;
+        font-size: 0.9rem;
+      }
+      .tag {
+        display: inline-block;
+        padding: 0.15rem 0.5rem;
+        background: rgba(26, 128, 0, 0.2);
+        border: 1px solid var(--dim);
+        font-size: 0.75rem;
+        margin-right: 0.25rem;
+        margin-top: 0.5rem;
+      }
+      .rss-subscribe {
+        background: var(--dimmer);
+        padding: 1rem;
+        margin: 2rem 0;
+        border-left: 3px solid var(--fg);
+        text-align: center;
+      }
+      .rss-subscribe a {
+        color: var(--fg);
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="nav">
+        <a href="/">[ HOME ]</a>
+        <a href="/docs.html">[ DOCS ]</a>
+        <a href="/blog.html">[ BLOG ]</a>
+        <a href="/about.html">[ ABOUT ]</a>
+      </div>
+
+      <header>
+        <h1>&gt; BLOG</h1>
+        <p class="tagline">Articles about zero-knowledge encryption and privacy</p>
+      </header>
+
+      <div class="rss-subscribe">
+        <p>Stay updated with new articles via <a href="/rss.xml">RSS Feed</a></p>
+      </div>
+
+      <h2>Upcoming Articles</h2>
+      <p>We're planning articles on these topics:</p>
+
+      <div class="article-card">
+        <h3>Understanding Zero-Knowledge Architecture</h3>
+        <div class="article-meta">Planned • Technical Deep Dive</div>
+        <p>
+          A comprehensive guide to zero-knowledge proofs and how they enable truly private services.
+          Learn how URL fragments, client-side encryption, and ephemeral storage combine to create
+          systems where the provider literally cannot access user data.
+        </p>
+        <span class="tag">Encryption</span>
+        <span class="tag">Architecture</span>
+      </div>
+
+      <div class="article-card">
+        <h3>AES-256-GCM Explained: Why This Encryption Standard?</h3>
+        <div class="article-meta">Planned • Security</div>
+        <p>
+          Deep dive into AES-256-GCM: why we chose it, how authenticated encryption works, and why
+          the GCM mode matters for integrity. We'll explain nonce requirements, key management, and
+          common pitfalls to avoid.
+        </p>
+        <span class="tag">Cryptography</span>
+        <span class="tag">AES</span>
+      </div>
+
+      <div class="article-card">
+        <h3>Building on Cloudflare Workers: Lessons Learned</h3>
+        <div class="article-meta">Planned • Engineering</div>
+        <p>
+          Our experience building volatile.sh on Cloudflare Workers and Durable Objects. We'll cover
+          the benefits of edge computing, Durable Object patterns, rate limiting strategies, and
+          deployment workflows.
+        </p>
+        <span class="tag">Cloudflare</span>
+        <span class="tag">Serverless</span>
+      </div>
+
+      <div class="article-card">
+        <h3>URL Fragments: The Secret to Zero-Knowledge Web Apps</h3>
+        <div class="article-meta">Planned • Technical</div>
+        <p>
+          How RFC 3986's URL fragment specification enables zero-knowledge web applications. We'll
+          explain why fragments are never sent to servers, demonstrate this behavior, and show how
+          to leverage it in your own applications.
+        </p>
+        <span class="tag">HTTP</span>
+        <span class="tag">Privacy</span>
+      </div>
+
+      <div class="article-card">
+        <h3>Comparing Secret Sharing: PrivNote vs volatile.sh vs OneTimeSecret</h3>
+        <div class="article-meta">Planned • Comparison</div>
+        <p>
+          An in-depth comparison of popular secret-sharing services. We'll analyze encryption
+          models, data retention policies, open-source status, self-hosting options, and trust
+          requirements.
+        </p>
+        <span class="tag">Comparison</span>
+        <span class="tag">Security</span>
+      </div>
+
+      <div class="article-card">
+        <h3>Privacy Best Practices for Sharing Sensitive Data</h3>
+        <div class="article-meta">Planned • Guide</div>
+        <p>
+          Practical advice for securely sharing passwords, API keys, and confidential information.
+          Learn about secure channels, avoiding link previews, and understanding threat models.
+        </p>
+        <span class="tag">Guide</span>
+        <span class="tag">Best Practices</span>
+      </div>
+
+      <div class="article-card">
+        <h3>Inside Web Crypto API: Browser-Based Encryption</h3>
+        <div class="article-meta">Planned • Tutorial</div>
+        <p>
+          How to use the native Web Crypto API for client-side encryption. We'll cover key
+          generation, AES-GCM encryption, export/import formats, and browser compatibility.
+        </p>
+        <span class="tag">JavaScript</span>
+        <span class="tag">Tutorial</span>
+      </div>
+
+      <div class="article-card">
+        <h3>Self-Hosting volatile.sh on Cloudflare's Free Tier</h3>
+        <div class="article-meta">Planned • Tutorial</div>
+        <p>
+          Step-by-step guide to deploying your own volatile.sh instance on Cloudflare Workers. Learn
+          about the free tier limits, configuration options, and customization possibilities.
+        </p>
+        <span class="tag">Tutorial</span>
+        <span class="tag">DevOps</span>
+      </div>
+
+      <div class="article-card">
+        <h3>Rate Limiting with Durable Objects: A Scalable Approach</h3>
+        <div class="article-meta">Planned • Engineering</div>
+        <p>
+          How we implemented sharded rate limiting using Cloudflare Durable Objects. We'll cover the
+          architecture, IP hashing for privacy, and horizontal scaling strategies.
+        </p>
+        <span class="tag">Rate Limiting</span>
+        <span class="tag">Architecture</span>
+      </div>
+
+      <div class="article-card">
+        <h3>Ephemeral Data: Designing Systems That Forget</h3>
+        <div class="article-meta">Planned • Philosophy</div>
+        <p>
+          The importance of ephemeral data in modern privacy design. We'll discuss data
+          minimization, automatic expiration, and building systems that prioritize privacy by
+          default.
+        </p>
+        <span class="tag">Privacy</span>
+        <span class="tag">Design</span>
+      </div>
+
+      <h2>Categories</h2>
+      <p>Articles we're planning by category:</p>
+      <ul>
+        <li><strong>Technical Deep Dives:</strong> Architecture, cryptography, internals</li>
+        <li><strong>Tutorials:</strong> How-to guides for developers and users</li>
+        <li><strong>Security:</strong> Threat models, best practices, vulnerability analysis</li>
+        <li><strong>Privacy:</strong> Data minimization, legal compliance, user rights</li>
+        <li>
+          <strong>Engineering:</strong> Cloudflare Workers, Durable Objects, serverless patterns
+        </li>
+        <li><strong>Comparisons:</strong> volatile.sh vs alternatives, feature breakdowns</li>
+      </ul>
+
+      <h2>Subscribe</h2>
+      <p>Stay updated when we publish new articles:</p>
+      <ul>
+        <li><a href="/rss.xml">RSS Feed</a> - Subscribe in your favorite reader</li>
+        <li>
+          <a href="https://github.com/user/volatile.sh" target="_blank" rel="noopener">GitHub</a> -
+          Watch releases for updates
+        </li>
+        <li>
+          <a href="https://x.com/volatilesh" target="_blank" rel="noopener">Twitter/X</a> - Follow
+          for announcements
+        </li>
+      </ul>
+
+      <h2>Contribute</h2>
+      <p>
+        Want to write an article for the volatile.sh blog? We welcome community contributions on
+        topics related to:
+      </p>
+      <ul>
+        <li>Zero-knowledge systems and architecture</li>
+        <li>Cryptography best practices</li>
+        <li>Privacy-preserving technologies</li>
+        <li>Serverless and edge computing</li>
+        <li>Security tutorials and guides</li>
+      </ul>
+      <p class="muted">Submit your article idea by opening an issue on GitHub.</p>
+
+      <p class="muted" style="margin-top: 2rem">
+        <a href="/">← Back to volatile.sh</a> ·
+        <a href="/docs.html">Documentation →</a>
+      </p>
+    </div>
+  </body>
+</html>

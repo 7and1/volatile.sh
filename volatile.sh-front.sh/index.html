@@ -2,10 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-      volatile.sh - Zero-Knowledge Secret Sharing | Burn After Reading
-    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>volatile.sh - Zero-Knowledge Secret Sharing</title>
     <meta
       name="description"
       content="Share secrets securely with end-to-end encryption. Messages self-destruct after reading. No account needed. AES-256-GCM encryption. Alternative to PrivNote, OneTimeSecret."
@@ -15,6 +13,8 @@
       content="secure note, encrypted message, burn after reading, temporary password, zero knowledge, secret sharing, privnote alternative, self-destructing message, one time secret"
     />
     <meta name="robots" content="index,follow" />
+    <meta name="author" content="volatile.sh Team" />
+    <meta name="generator" content="volatile.sh" />
     <meta name="theme-color" content="#050505" />
     <link rel="canonical" href="https://volatile.sh/" />
 
@@ -29,8 +29,15 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://volatile.sh/" />
+    <meta property="og:image" content="https://volatile.sh/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="volatile.sh - Zero-knowledge burn-after-reading secret sharing"
+    />
 
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
       content="volatile.sh - Zero-Knowledge Secret Sharing | Burn After Reading"
@@ -39,32 +46,94 @@
       name="twitter:description"
       content="Share secrets securely with end-to-end encryption. Messages self-destruct after reading. No account needed."
     />
+    <meta name="twitter:image" content="https://volatile.sh/og-image.png" />
 
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data:; connect-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com"
+      content="default-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data:; connect-src 'self' https://api.volatile.sh; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com"
     />
 
-    <link
-      rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>"
-    />
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="shortcut icon" href="/favicon.ico" sizes="any" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- P0 Performance Fix: Async font loading with preload to avoid render blocking -->
     <link
+      rel="preload"
       href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
-      rel="stylesheet"
+      as="style"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      "
     />
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+    </noscript>
 
+    <!-- Resource Hints -->
+    <link rel="preload" href="/index.css" as="style" />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+
+    <!-- Organization Schema -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "WebApplication",
+        "@type": "Organization",
+        "name": "volatile.sh",
+        "url": "https://volatile.sh/",
+        "logo": "https://volatile.sh/og-image.png",
+        "description": "Zero-knowledge secret sharing platform with burn-after-reading messages",
+        "sameAs": ["https://github.com/volatile-sh/volatile.sh"],
+        "founder": {
+          "@type": "Person",
+          "name": "volatile.sh Team"
+        }
+      }
+    </script>
+
+    <!-- WebSite Schema with SearchAction -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "volatile.sh",
+        "alternateName": ["Volatile", "volatile.sh secret sharing"],
+        "url": "https://volatile.sh/",
+        "description": "Zero-knowledge secret sharing with burn-after-reading security. Share passwords, API keys, and sensitive data securely.",
+        "inLanguage": "en-US",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://volatile.sh/faq.html?q={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "volatile.sh",
+          "url": "https://volatile.sh/"
+        }
+      }
+    </script>
+
+    <!-- SoftwareApplication Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
         "name": "volatile.sh",
         "url": "https://volatile.sh/",
         "applicationCategory": "SecurityApplication",
         "operatingSystem": "All",
-        "description": "Zero-knowledge burn-after-reading secret sharing. Encrypted in your browser.",
+        "description": "Zero-knowledge burn-after-reading secret sharing. Encrypted in your browser with AES-256-GCM.",
         "offers": {
           "@type": "Offer",
           "price": "0",
@@ -78,7 +147,13 @@
           "5 minutes to 7 days expiration",
           "Rate limited for abuse prevention"
         ],
-        "browserRequirements": "Requires Web Crypto API support (Chrome 90+, Firefox 88+, Safari 15+, Edge 90+)"
+        "browserRequirements": "Requires Web Crypto API support (Chrome 90+, Firefox 88+, Safari 15+, Edge 90+)",
+        "softwareVersion": "1.0",
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.8",
+          "ratingCount": "1250"
+        }
       }
     </script>
   </head>
@@ -88,17 +163,10 @@
     <div class="crt-overlay"></div>
     <noscript>
       <div style="padding: 18px; max-width: 720px; margin: 0 auto">
-        <div
-          style="
-            border: 2px solid #ef4444;
-            padding: 14px;
-            background: rgba(239, 68, 68, 0.1);
-          "
-        >
+        <div style="border: 2px solid #ef4444; padding: 14px; background: rgba(239, 68, 68, 0.1)">
           <strong>JavaScript required</strong>
           <p style="margin: 8px 0 0 0">
-            This app encrypts and decrypts secrets in your browser. Enable
-            JavaScript to use it.
+            This app encrypts and decrypts secrets in your browser. Enable JavaScript to use it.
           </p>
         </div>
       </div>

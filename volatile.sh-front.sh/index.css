@@ -2,28 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Theme Variables */
+:root {
+  --term-green: #33ff00;
+  --term-green-dim: #1a8000;
+  --term-bg: #050505;
+  --term-panel: #0a0a0a;
+}
+
+/* High Contrast Theme */
+[data-theme="high-contrast"] {
+  --term-green: #00ff00;
+  --term-green-dim: #00cc00;
+  --term-bg: #000000;
+  --term-panel: #000000;
+}
+
+/* Dark Theme (muted) */
+[data-theme="dark"] {
+  --term-green: #4ade80;
+  --term-green-dim: #22c55e;
+  --term-bg: #0a0a0a;
+  --term-panel: #111111;
+}
+
 body {
-  background-color: #050505;
-  color: #33ff00;
+  background-color: var(--term-bg);
+  color: var(--term-green);
   font-family:
-    "VT323", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
+    "VT323", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
   overflow-x: hidden;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: var(--term-panel);
 }
 ::-webkit-scrollbar-thumb {
-  background: #33ff00;
-  border: 2px solid #0a0a0a;
+  background: var(--term-green);
+  border: 2px solid var(--term-panel);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #1a8000;
+  background: var(--term-green-dim);
+}
+
+/* Mobile-optimized scrollbar */
+@media (max-width: 640px) {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
 }
 
 /* CRT Scanline Effect */
@@ -62,6 +95,14 @@ body {
   pointer-events: none;
 }
 
+/* P1 Performance Fix: Hide CRT effects on mobile for better performance */
+@media (max-width: 768px) {
+  .scanlines,
+  .crt-overlay {
+    display: none !important;
+  }
+}
+
 /* Phosphor Glow */
 .glow-text {
   text-shadow:
@@ -72,4 +113,379 @@ body {
   box-shadow:
     0 0 10px rgba(51, 255, 0, 0.4),
     inset 0 0 5px rgba(51, 255, 0, 0.1);
+}
+
+/* Mobile viewport height fix for virtual keyboard */
+@supports (height: 100dvh) {
+  body {
+    height: 100dvh;
+  }
+}
+
+/* Animations */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-green {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.3s ease-out;
+}
+
+.animate-slide-out-right {
+  animation: slideOutRight 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out;
+}
+
+.animate-pulse-green {
+  animation: pulse-green 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Animation delays */
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+}
+
+/* Ripple effect for button clicks */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(51, 255, 0, 0.4);
+  transform: translate(-50%, -50%);
+  transition:
+    width 0.6s,
+    height 0.6s;
+}
+
+.btn-ripple:active::after {
+  width: 300px;
+  height: 300px;
+}
+
+/* Focus visible styles for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--term-green);
+  outline-offset: 2px;
+}
+
+/* Skip to content link for accessibility */
+.skip-to-content {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: var(--term-green);
+  color: #000;
+  padding: 0.5rem 1rem;
+  z-index: 100;
+  font-weight: bold;
+}
+
+.skip-to-content:focus {
+  top: 0;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  /* Disable CRT effects for users with motion sensitivity */
+  .scanlines,
+  .crt-overlay {
+    display: none !important;
+  }
+
+  .animate-blink {
+    animation: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --term-green: #00ff00;
+    --term-bg: #000000;
+  }
+
+  .glow-text,
+  .glow-border {
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 640px) {
+  /* Larger touch targets for mobile */
+  button,
+  [role="button"],
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Ensure text is readable on mobile */
+  body {
+    font-size: 16px;
+  }
+
+  /* Prevent text from being too small */
+  textarea,
+  input {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+
+  /* Better spacing for mobile */
+  .space-y-4 > * + * {
+    margin-top: 1rem;
+  }
+
+  /* Optimize animations for mobile performance */
+  .glow-text,
+  .glow-border {
+    will-change: auto;
+  }
+}
+
+/* Safe area insets for mobile devices (notch, etc.) */
+@supports (padding: env(safe-area-inset-bottom)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Handle keyboard showing on mobile */
+@supports (touch-action: manipulation) {
+  textarea {
+    touch-action: manipulation;
+  }
+}
+
+/* Print styles */
+@media print {
+  .scanlines,
+  .crt-overlay,
+  button:not([type]),
+  [role="button"] {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  .glow-text,
+  .glow-border {
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/* Text Size Adjustments for Accessibility */
+:root {
+  --base-font-size: 16px;
+}
+
+html.text-small {
+  --base-font-size: 14px;
+}
+
+html.text-small body,
+html.text-small input,
+html.text-small textarea,
+html.text-small button {
+  font-size: 14px;
+}
+
+html.text-medium {
+  --base-font-size: 16px;
+}
+
+html.text-medium body,
+html.text-medium input,
+html.text-medium textarea,
+html.text-medium button {
+  font-size: 16px;
+}
+
+html.text-large {
+  --base-font-size: 20px;
+}
+
+html.text-large body,
+html.text-large input,
+html.text-large textarea,
+html.text-large button {
+  font-size: 20px;
+}
+
+/* Enhanced High Contrast Theme */
+[data-theme="high-contrast"] {
+  --term-green: #00ff00;
+  --term-green-dim: #00cc00;
+  --term-bg: #000000;
+  --term-panel: #000000;
+}
+
+[data-theme="high-contrast"] .glow-text {
+  text-shadow: none !important;
+}
+
+[data-theme="high-contrast"] .glow-border {
+  box-shadow: 2px 2px 0px var(--term-green) !important;
+}
+
+[data-theme="high-contrast"] button:focus-visible,
+[data-theme="high-contrast"] a:focus-visible,
+[data-theme="high-contrast"] input:focus-visible,
+[data-theme="high-contrast"] textarea:focus-visible,
+[data-theme="high-contrast"] select:focus-visible {
+  outline: 3px solid var(--term-green);
+  outline-offset: 2px;
+}
+
+[data-theme="high-contrast"] textarea,
+[data-theme="high-contrast"] input {
+  border-width: 3px;
+}
+
+/* Enhanced focus indicators for all themes */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--term-green);
+  outline-offset: 2px;
+}
+
+/* Skip link styling */
+.skip-to-content:focus {
+  top: 0;
+  left: 0;
+  outline: 3px solid var(--term-green);
+  outline-offset: 3px;
+}
+
+/* System dark mode preference - use dark theme colors if no theme is set */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --term-green: #33ff00;
+    --term-green-dim: #1a8000;
+    --term-bg: #050505;
+    --term-panel: #0a0a0a;
+  }
+}
+
+/* Ensure smooth transitions between themes */
+:root {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Mobile landscape orientation optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+  .min-h-screen {
+    min-height: auto;
+  }
+
+  .min-h-\[200px\] {
+    min-height: 120px;
+  }
+
+  .min-h-\[300px\] {
+    min-height: 180px;
+  }
 }

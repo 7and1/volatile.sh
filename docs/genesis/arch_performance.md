@@ -234,8 +234,7 @@ export default {
 };
 
 function generateSecretId(): string {
-  const chars =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   const bytes = new Uint8Array(12);
   crypto.getRandomValues(bytes);
   let result = "";

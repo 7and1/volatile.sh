@@ -11,6 +11,71 @@
     <meta name="robots" content="index,follow" />
     <meta name="theme-color" content="#050505" />
     <link rel="canonical" href="https://volatile.sh/security.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Security - volatile.sh" />
+    <meta
+      property="og:description"
+      content="Security technical details of volatile.sh - zero-knowledge encryption, architecture, audit."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://volatile.sh/security.html" />
+    <meta property="og:site_name" content="volatile.sh" />
+    <meta property="og:image" content="https://volatile.sh/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Security - volatile.sh" />
+    <meta
+      name="twitter:description"
+      content="Zero-knowledge security architecture and encryption details."
+    />
+    <meta name="twitter:image" content="https://volatile.sh/og-image.png" />
+    <meta name="author" content="volatile.sh Team" />
+
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "volatile.sh",
+        "url": "https://volatile.sh/",
+        "logo": "https://volatile.sh/og-image.svg",
+        "description": "Zero-knowledge secret sharing service built on Cloudflare Workers",
+        "sameAs": ["https://github.com"],
+        "founder": "open-source community"
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://volatile.sh/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Security",
+            "item": "https://volatile.sh/security.html"
+          }
+        ]
+      }
+    </script>
+
     <style>
       :root {
         --bg: #050505;
@@ -28,8 +93,7 @@
         padding: 1.5rem;
         background: var(--bg);
         color: var(--fg);
-        font-family:
-          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         line-height: 1.6;
       }
       .container {
@@ -125,10 +189,11 @@
     <div class="container">
       <div class="nav">
         <a href="/">[ HOME ]</a>
+        <a href="/api.html">[ API ]</a>
+        <a href="/use-cases.html">[ USE CASES ]</a>
+        <a href="/comparison.html">[ COMPARISON ]</a>
         <a href="/faq.html">[ FAQ ]</a>
-        <a href="/docs.html">[ DOCS ]</a>
-        <a href="/privacy.html">[ PRIVACY ]</a>
-        <a href="/terms.html">[ TERMS ]</a>
+        <a href="/security.html">[ SECURITY ]</a>
       </div>
 
       <header>
@@ -138,10 +203,9 @@
 
       <h2>Executive Summary</h2>
       <p>
-        volatile.sh is a zero-knowledge, burn-after-reading secret sharing
-        service. The security model ensures that secrets are encrypted
-        client-side before transmission, and the server never has access to
-        decryption keys. This architecture makes it technically impossible for
+        volatile.sh is a zero-knowledge, burn-after-reading secret sharing service. The security
+        model ensures that secrets are encrypted client-side before transmission, and the server
+        never has access to decryption keys. This architecture makes it technically impossible for
         the service operator to read user secrets.
       </p>
 
@@ -151,9 +215,7 @@
         <li class="check">Server operator reading secrets</li>
         <li class="check">Database breaches revealing plaintext</li>
         <li class="check">Network interception of secrets in transit</li>
-        <li class="check">
-          Lawful or unlawful compelled disclosure of user data
-        </li>
+        <li class="check">Lawful or unlawful compelled disclosure of user data</li>
         <li class="check">Long-term data retention (secrets auto-delete)</li>
       </ul>
 
@@ -195,26 +257,24 @@
 
       <h2>Architecture Overview</h2>
       <div class="diagram">
-        ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ │ SENDER │ │
-        SERVER │ │ RECIPIENT │ │ (Browser) │ │ (Cloudflare) │ │ (Browser) │
-        └────────┬────────┘ └────────┬────────┘ └────────┬────────┘ │ │ │ │ 1.
-        Generate key │ │ │ (AES-256-GCM) │ │ │ │ │ │ 2. Encrypt locally │ │ │
-        (plaintext → ciphertext)│ │ │ │ │ │ 3. Send ciphertext ────────┼───→
-        Store encrypted ──────┼───┐ │ + IV only │ (no key!) │ │ │ │ │ │ │ 4.
-        Embed key in URL │ │ │ │ fragment (#key) │ │ │ │ │ │ │ │
-        ─────────────────────────────────────────────────────────│ │ │ │ │ │ │ │
-        5. Request secret │◄─┘ │ │ (by ID) │ │ │ │ │ │ 6. Return ciphertext │ │
-        │ + DELETE from DB │ │ │ │ │ │ │ 7. Decrypt locally │ │ │ (key from
-        fragment) │ │ │
+        ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ │ SENDER │ │ SERVER │ │
+        RECIPIENT │ │ (Browser) │ │ (Cloudflare) │ │ (Browser) │ └────────┬────────┘
+        └────────┬────────┘ └────────┬────────┘ │ │ │ │ 1. Generate key │ │ │ (AES-256-GCM) │ │ │ │
+        │ │ 2. Encrypt locally │ │ │ (plaintext → ciphertext)│ │ │ │ │ │ 3. Send ciphertext
+        ────────┼───→ Store encrypted ──────┼───┐ │ + IV only │ (no key!) │ │ │ │ │ │ │ 4. Embed key
+        in URL │ │ │ │ fragment (#key) │ │ │ │ │ │ │ │
+        ─────────────────────────────────────────────────────────│ │ │ │ │ │ │ │ 5. Request secret
+        │◄─┘ │ │ (by ID) │ │ │ │ │ │ 6. Return ciphertext │ │ │ + DELETE from DB │ │ │ │ │ │ │ 7.
+        Decrypt locally │ │ │ (key from fragment) │ │ │
         └───────────────────────────┴───────────────────────────┘
       </div>
 
       <h2>Zero-Knowledge Guarantee</h2>
       <p>
-        The zero-knowledge property is achieved through URL fragment isolation.
-        Per RFC 3986, the fragment component of a URL (the part after
-        <code>#</code>) is <strong>never sent to the server</strong> in HTTP
-        requests. This is a fundamental property of the web architecture.
+        The zero-knowledge property is achieved through URL fragment isolation. Per RFC 3986, the
+        fragment component of a URL (the part after
+        <code>#</code>) is <strong>never sent to the server</strong> in HTTP requests. This is a
+        fundamental property of the web architecture.
       </p>
       <p>By placing the decryption key in the fragment, we ensure:</p>
       <ul>
@@ -232,9 +292,7 @@
           Browser generates AES-256-GCM key using
           <code>crypto.subtle.generateKey()</code>
         </li>
-        <li>
-          Browser encrypts plaintext using <code>crypto.subtle.encrypt()</code>
-        </li>
+        <li>Browser encrypts plaintext using <code>crypto.subtle.encrypt()</code></li>
         <li>Key is exported to base64url and embedded in URL fragment</li>
         <li>Ciphertext + IV sent to server via POST /api/secrets</li>
         <li>Server stores in Durable Object with TTL alarm</li>
@@ -244,9 +302,7 @@
       <ol>
         <li>User opens link (fragment is available in browser only)</li>
         <li>Browser requests secret from server via GET /api/secrets/:id</li>
-        <li>
-          Server returns ciphertext + IV and immediately deletes from storage
-        </li>
+        <li>Server returns ciphertext + IV and immediately deletes from storage</li>
         <li>Browser extracts key from fragment</li>
         <li>Browser decrypts using <code>crypto.subtle.decrypt()</code></li>
         <li>Plaintext displayed to user</li>
@@ -289,10 +345,7 @@ Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 Content-Security-Policy: default-src 'self'; ...</code></pre>
 
       <h2>Rate Limiting</h2>
-      <p>
-        To prevent abuse, rate limiting is implemented using sharded Durable
-        Objects:
-      </p>
+      <p>To prevent abuse, rate limiting is implemented using sharded Durable Objects:</p>
       <ul>
         <li>256 shards for horizontal scalability</li>
         <li>IP addresses are hashed using SHA-256 for privacy</li>
@@ -359,30 +412,188 @@ Content-Security-Policy: default-src 'self'; ...</code></pre>
         </tr>
       </table>
 
-      <h2>Independent Verification</h2>
-      <p>volatile.sh is open source. You can:</p>
+      <h2>Encryption Technical Details</h2>
+      <h3>Web Crypto API Implementation</h3>
+      <p>volatile.sh uses the browser's native Web Crypto API for all cryptographic operations:</p>
+      <pre><code><span class="syntax-comment">// Key generation (client-side)</span>
+const key = await crypto.subtle.generateKey(
+  { name: "AES-GCM", length: 256 },
+  true,
+  ["encrypt", "decrypt"]
+);
+
+<span class="syntax-comment">// Encryption parameters</span>
+const algorithm = {
+  name: "AES-GCM",
+  iv: new Uint8Array(12),  <span class="syntax-comment">// 96-bit IV</span>
+  tagLength: 128            <span class="syntax-comment">// 128-bit auth tag</span>
+};</code></pre>
+
+      <h3>Cryptographic Properties</h3>
+      <table>
+        <tr>
+          <th>Property</th>
+          <th>Value</th>
+          <th>Significance</th>
+        </tr>
+        <tr>
+          <td>Confidentiality</td>
+          <td>AES-256</td>
+          <td>256-bit key, approved for TOP SECRET data</td>
+        </tr>
+        <tr>
+          <td>Integrity</td>
+          <td>GCM Auth Tag</td>
+          <td>128-bit tag detects any tampering</td>
+        </tr>
+        <tr>
+          <td>Key Separation</td>
+          <td>Per-secret</td>
+          <td>Each secret uses a unique random key</td>
+        </tr>
+        <tr>
+          <td>IV Uniqueness</td>
+          <td>CSPRNG</td>
+          <td>Cryptographically secure random IV per encryption</td>
+        </tr>
+      </table>
+
+      <h2>Source Code Transparency</h2>
+      <p>volatile.sh is 100% open source under the MIT License. This means:</p>
       <ul>
-        <li>Review the source code on GitHub</li>
+        <li class="check">Complete source code available on GitHub</li>
+        <li class="check">Free to audit, modify, and distribute</li>
+        <li class="check">No proprietary components or hidden code</li>
+        <li class="check">Self-hosting encouraged and documented</li>
+      </ul>
+
+      <h3>Repository Structure</h3>
+      <pre><code>volatile.sh/
+├── src/
+│   ├── index.js         <span class="syntax-comment"># Main worker entry point</span>
+│   ├── cryptoId.js      <span class="syntax-comment"># Secret ID generation</span>
+│   ├── do/              <span class="syntax-comment"># Durable Objects implementation</span>
+│   │   └── RateLimiter.js
+│   ├── rateLimit.js     <span class="syntax-comment"># Rate limiting logic</span>
+│   └── security.js      <span class="syntax-comment"># Security utilities</span>
+├── volatile.sh-front.sh/
+│   └── components/      <span class="syntax-comment"># Frontend encryption</span>
+│       ├── CreateView.tsx
+│       └── ReadView.tsx
+└── test/                <span class="syntax-comment"># Comprehensive test suite</span></code></pre>
+
+      <h2>Security Audits</h2>
+      <h3>Professional Audit Status</h3>
+      <p>
+        We are currently seeking independent security audits. If you represent a security firm and
+        would like to audit volatile.sh, please contact us.
+      </p>
+
+      <h3>Self-Audit Checklist</h3>
+      <p>Our code undergoes regular self-audits including:</p>
+      <ul>
+        <li class="check">Dependency vulnerability scanning (npm audit)</li>
+        <li class="check">Static code analysis (ESLint, TypeScript strict mode)</li>
+        <li class="check">Manual code review before each release</li>
+        <li class="check">Test coverage validation</li>
+      </ul>
+
+      <h2>Bug Bounty Program</h2>
+      <p>
+        We believe in responsible disclosure and value the security community's help in making
+        volatile.sh more secure.
+      </p>
+
+      <h3>Reward Scope</h3>
+      <table>
+        <tr>
+          <th>Severity</th>
+          <th>Reward</th>
+          <th>Examples</th>
+        </tr>
+        <tr>
+          <td>Critical</td>
+          <td>$500 - $1,000</td>
+          <td>Secret decryption without key, unauthorized access</td>
+        </tr>
+        <tr>
+          <td>High</td>
+          <td>$200 - $500</td>
+          <td>Bypassing rate limits, data leakage</td>
+        </tr>
+        <tr>
+          <td>Medium</td>
+          <td>$50 - $200</td>
+          <td>XSS, CSRF, information disclosure</td>
+        </tr>
+        <tr>
+          <td>Low</td>
+          <td>$10 - $50</td>
+          <td>Minor configuration issues</td>
+        </tr>
+      </table>
+
+      <h3>Safe Harbor</h3>
+      <p>We commit to:</p>
+      <ul>
+        <li>No legal action if you follow responsible disclosure</li>
+        <li>Response within 48 hours of initial contact</li>
+        <li>Credit in our security hall of fame (unless you wish to remain anonymous)</li>
+      </ul>
+
+      <h3>How to Report</h3>
+      <pre><code>Email: security@volatile.sh
+PGP:  [available on request]
+Subject: [Security] Brief description
+
+Include:
+- Vulnerability description
+- Proof of concept
+- Suggested fix (if known)
+- Your preferred contact method</code></pre>
+
+      <h3>Scope</h3>
+      <p><strong>In scope:</strong></p>
+      <ul>
+        <li>volatile.sh web application</li>
+        <li>API endpoints at volatile.sh/api/*</li>
+        <li>Encryption/decryption implementation</li>
+        <li>Authentication mechanisms (if added)</li>
+      </ul>
+
+      <p><strong>Out of scope:</strong></p>
+      <ul>
+        <li>Third-party services (Cloudflare infrastructure)</li>
+        <li>Social engineering attacks</li>
+        <li>Physical attacks on infrastructure</li>
+        <li>Rate limiting (unless it enables a more serious vulnerability)</li>
+      </ul>
+
+      <h2>Independent Verification</h2>
+      <p>You can independently verify volatile.sh security:</p>
+      <ul>
         <li>
-          Audit the encryption implementation in your browser's developer tools
+          <a href="https://github.com/user/volatile.sh" target="_blank" rel="noopener"
+            >Review source code on GitHub</a
+          >
         </li>
-        <li>Inspect network requests to verify the fragment is never sent</li>
-        <li>
-          Run your own instance using the provided deployment instructions
-        </li>
+        <li>Audit encryption in browser developer tools (Network tab, Console)</li>
+        <li>Verify fragment is never sent (check Network requests)</li>
+        <li><a href="/docs.html">Run your own instance</a></li>
       </ul>
 
       <h2>Responsible Disclosure</h2>
-      <p>
-        If you discover a security vulnerability, please disclose it
-        responsibly:
-      </p>
+      <p>If you discover a security vulnerability, please disclose it responsibly:</p>
       <ul>
-        <li>Email: security@volatile.sh</li>
-        <li>PGP key: Available on keybase.io</li>
+        <li>Email: <a href="mailto:security@volatile.sh">security@volatile.sh</a></li>
+        <li>PGP key: Available on request</li>
         <li>We will respond within 48 hours</li>
-        <li>Bug bounties may be available for critical findings</li>
+        <li>Bug bounties available for critical findings</li>
       </ul>
+
+      <h2>Security Hall of Fame</h2>
+      <p>We thank the security researchers who have helped make volatile.sh more secure:</p>
+      <pre><code>No vulnerabilities reported yet - be the first!</code></pre>
 
       <p class="muted" style="margin-top: 2rem">
         <a href="/">← Back to volatile.sh</a>

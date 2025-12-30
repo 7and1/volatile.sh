@@ -1,14 +1,12 @@
-const test = require("node:test");
-const assert = require("node:assert/strict");
-const { Miniflare } = require("miniflare");
+import test from "node:test";
+import assert from "node:assert/strict";
+import { Miniflare } from "miniflare";
+import { clearInflight } from "../src/deduplication.js";
+import { rateLimitCache } from "../src/cache.js";
 
 function b64urlEncode(bytes) {
   const buff = Buffer.from(bytes);
-  return buff
-    .toString("base64")
-    .replace(/\+/g, "-")
-    .replace(/\//g, "_")
-    .replace(/=+$/g, "");
+  return buff.toString("base64").replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
 }
 
 function b64urlDecode(str) {
@@ -49,7 +47,12 @@ test("GET /api/health returns ok", async () => {
     });
     assert.equal(res.status, 200);
     const data = await res.json();
-    assert.deepEqual(data, { ok: true });
+    // Health check now includes version, uptime, and DO status
+    assert.equal(data.ok, true);
+    assert.ok(data.version !== undefined);
+    assert.ok(data.uptime !== undefined);
+    assert.ok(data.do !== undefined);
+    assert.ok(data.metrics !== undefined);
   } finally {
     await mf.dispose();
   }
@@ -73,18 +76,21 @@ test("GET / serves the frontend HTML", async () => {
 test("end-to-end: encrypt -> create -> read -> decrypt; second read fails", async () => {
   const mf = await makeEnv();
   try {
+    // Clear caches to avoid interference
+    clearInflight();
+    rateLimitCache.clear();
+
     const plaintext = "hello volatile";
 
-    const key = await crypto.subtle.generateKey(
-      { name: "AES-GCM", length: 256 },
-      true,
-      ["encrypt", "decrypt"],
-    );
+    const key = await crypto.subtle.generateKey({ name: "AES-GCM", length: 256 }, true, [
+      "encrypt",
+      "decrypt",
+    ]);
     const iv = crypto.getRandomValues(new Uint8Array(12));
     const ciphertext = await crypto.subtle.encrypt(
       { name: "AES-GCM", iv },
       key,
-      new TextEncoder().encode(plaintext),
+      new TextEncoder().encode(plaintext)
     );
 
     const createRes = await mf.dispatchFetch("http://localhost/api/secrets", {
@@ -105,16 +111,16 @@ test("end-to-end: encrypt -> create -> read -> decrypt; second read fails", asyn
     assert.ok(created.id);
     assert.equal(typeof created.expiresAt, "number");
 
-    const readRes = await mf.dispatchFetch(
-      `http://localhost/api/secrets/${created.id}`,
-      {
-        method: "GET",
-        headers: {
-          Origin: "http://localhost:8787",
-          "CF-Connecting-IP": "203.0.113.10",
-        },
+    // Clear deduplication before read
+    clearInflight();
+
+    const readRes = await mf.dispatchFetch(`http://localhost/api/secrets/${created.id}`, {
+      method: "GET",
+      headers: {
+        Origin: "http://localhost:8787",
+        "CF-Connecting-IP": "203.0.113.10",
       },
-    );
+    });
     assert.equal(readRes.status, 200);
     const payload = await readRes.json();
     assert.ok(payload.encrypted);
@@ -123,20 +129,20 @@ test("end-to-end: encrypt -> create -> read -> decrypt; second read fails", asyn
     const decrypted = await crypto.subtle.decrypt(
       { name: "AES-GCM", iv: b64urlDecode(payload.iv) },
       key,
-      b64urlDecode(payload.encrypted),
+      b64urlDecode(payload.encrypted)
     );
     assert.equal(new TextDecoder().decode(decrypted), plaintext);
 
-    const secondRead = await mf.dispatchFetch(
-      `http://localhost/api/secrets/${created.id}`,
-      {
-        method: "GET",
-        headers: {
-          Origin: "http://localhost:8787",
-          "CF-Connecting-IP": "203.0.113.10",
-        },
+    // Clear deduplication before second read
+    clearInflight();
+
+    const secondRead = await mf.dispatchFetch(`http://localhost/api/secrets/${created.id}`, {
+      method: "GET",
+      headers: {
+        Origin: "http://localhost:8787",
+        "CF-Connecting-IP": "203.0.113.10",
       },
-    );
+    });
     assert.equal(secondRead.status, 404);
   } finally {
     await mf.dispose();
@@ -146,6 +152,10 @@ test("end-to-end: encrypt -> create -> read -> decrypt; second read fails", asyn
 test("rate limiting: create is limited per IP", async () => {
   const mf = await makeEnv();
   try {
+    // Clear caches to avoid interference
+    clearInflight();
+    rateLimitCache.clear();
+
     const body = JSON.stringify({
       encrypted: "aGVsbG8", // base64url("hello")
       iv: "aXYxMjM0NTY3ODkw", // just a token; not validated as 12-byte here
@@ -165,12 +175,18 @@ test("rate limiting: create is limited per IP", async () => {
     });
     assert.equal(r1.status, 201);
 
+    // Clear deduplication between requests
+    clearInflight();
+
     const r2 = await mf.dispatchFetch("http://localhost/api/secrets", {
       method: "POST",
       headers,
       body,
     });
     assert.equal(r2.status, 201);
+
+    // Clear deduplication between requests
+    clearInflight();
 
     const r3 = await mf.dispatchFetch("http://localhost/api/secrets", {
       method: "POST",
@@ -179,7 +195,7 @@ test("rate limiting: create is limited per IP", async () => {
     });
     assert.equal(r3.status, 429);
     const data = await r3.json();
-    assert.equal(data.error, "RATE_LIMITED");
+    assert.equal(data.error.code, "RATE_LIMITED");
   } finally {
     await mf.dispose();
   }
@@ -210,7 +226,7 @@ test("invalid ID format returns 400", async () => {
       });
       assert.equal(res.status, 400, `Expected 400 for invalid ID: ${id}`);
       const data = await res.json();
-      assert.equal(data.error, "INVALID_ID");
+      assert.equal(data.error.code, "INVALID_ID");
     }
   } finally {
     await mf.dispose();
@@ -240,7 +256,7 @@ test("IV length validation rejects invalid IVs", async () => {
     });
     assert.equal(res.status, 400);
     const data = await res.json();
-    assert.equal(data.error, "INVALID_IV_LENGTH");
+    assert.equal(data.error.code, "INVALID_IV_LENGTH");
   } finally {
     await mf.dispose();
   }
@@ -278,13 +294,9 @@ test("missing fields return proper error", async () => {
         },
         body: JSON.stringify(testCase.body),
       });
-      assert.equal(
-        res.status,
-        400,
-        `Failed for case: ${testCase.expectedError}`,
-      );
+      assert.equal(res.status, 400, `Failed for case: ${testCase.expectedError}`);
       const data = await res.json();
-      assert.equal(data.error, testCase.expectedError);
+      assert.equal(data.error.code, testCase.expectedError);
     }
   } finally {
     await mf.dispose();
@@ -294,16 +306,15 @@ test("missing fields return proper error", async () => {
 test("TTL boundary values are enforced", async () => {
   const mf = await makeEnv();
   try {
-    const key = await crypto.subtle.generateKey(
-      { name: "AES-GCM", length: 256 },
-      true,
-      ["encrypt", "decrypt"],
-    );
+    const key = await crypto.subtle.generateKey({ name: "AES-GCM", length: 256 }, true, [
+      "encrypt",
+      "decrypt",
+    ]);
     const iv = crypto.getRandomValues(new Uint8Array(12));
     const ciphertext = await crypto.subtle.encrypt(
       { name: "AES-GCM", iv },
       key,
-      new TextEncoder().encode("test"),
+      new TextEncoder().encode("test")
     );
 
     const body = {

@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compare Alternatives - volatile.sh</title>
+    <meta
+      name="description"
+      content="Compare volatile.sh with PrivNote, OneTimeSecret, Password Pusher, Bitwarden Send. See why we're the best zero-knowledge secret sharing solution."
+    />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#050505" />
+    <link rel="canonical" href="https://volatile.sh/comparison.html" />
+
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>"
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Compare Alternatives - volatile.sh" />
+    <meta
+      property="og:description"
+      content="See how volatile.sh compares to PrivNote, OneTimeSecret, Password Pusher, and Bitwarden Send."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://volatile.sh/comparison.html" />
+    <meta property="og:site_name" content="volatile.sh" />
+    <meta property="og:image" content="https://volatile.sh/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Compare Alternatives - volatile.sh" />
+    <meta name="twitter:description" content="Zero-knowledge secret sharing comparison." />
+    <meta name="twitter:image" content="https://volatile.sh/og-image.png" />
+    <meta name="author" content="volatile.sh Team" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "name": "volatile.sh vs Competitors Comparison",
+        "description": "Compare volatile.sh with PrivNote, OneTimeSecret, Password Pusher, Bitwarden Send, Snappass, and Cryptbin",
+        "url": "https://volatile.sh/comparison.html",
+        "author": {
+          "@type": "Organization",
+          "name": "volatile.sh"
+        }
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://volatile.sh/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Comparison",
+            "item": "https://volatile.sh/comparison.html"
+          }
+        ]
+      }
+    </script>
+
+    <style>
+      :root {
+        --bg: #050505;
+        --fg: #33ff00;
+        --dim: #1a8000;
+        --dimmer: #0c3d00;
+        --red: #ef4444;
+        --blue: #3b82f6;
+        --yellow: #fbbf24;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 1.5rem;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        line-height: 1.6;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      header {
+        margin-bottom: 2rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid var(--dimmer);
+      }
+      h1 {
+        font-size: 1.8rem;
+        margin: 0 0 0.5rem 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      .tagline {
+        font-size: 0.85rem;
+        opacity: 0.7;
+      }
+      h2 {
+        font-size: 1.2rem;
+        margin: 2.5rem 0 1rem 0;
+        padding-bottom: 0.25rem;
+        border-bottom: 1px solid var(--dimmer);
+      }
+      h3 {
+        font-size: 1rem;
+        margin: 1.5rem 0 0.75rem 0;
+      }
+      p,
+      li {
+        opacity: 0.9;
+        font-size: 0.93rem;
+      }
+      a {
+        color: var(--dim);
+        text-decoration: none;
+      }
+      a:hover {
+        color: var(--fg);
+        text-decoration: underline;
+      }
+      .muted {
+        color: var(--dim);
+      }
+      code {
+        color: var(--fg);
+        background: var(--dimmer);
+        padding: 0.15rem 0.4rem;
+        font-size: 0.9em;
+      }
+      .nav {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 0.85rem;
+      }
+      .nav a {
+        margin: 0 0.5rem;
+        opacity: 0.7;
+      }
+      .nav a:hover {
+        opacity: 1;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+      }
+      th,
+      td {
+        padding: 0.75rem;
+        border-bottom: 1px solid var(--dimmer);
+        text-align: center;
+      }
+      th:first-child,
+      td:first-child {
+        text-align: left;
+      }
+      th {
+        font-weight: bold;
+        opacity: 1;
+      }
+      .vs-table th {
+        background: var(--dimmer);
+      }
+      .vs-table tr:hover {
+        background: rgba(26, 128, 0, 0.1);
+      }
+      .check {
+        color: var(--fg);
+      }
+      .check::after {
+        content: " ✓";
+      }
+      .cross {
+        color: var(--red);
+      }
+      .cross::after {
+        content: " ✗";
+      }
+      .partial {
+        color: var(--yellow);
+      }
+      .partial::after {
+        content: " ~";
+      }
+      .highlight-row {
+        background: rgba(51, 255, 0, 0.1);
+      }
+      .competitor {
+        border: 1px solid var(--dimmer);
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+      }
+      .competitor h3 {
+        margin-top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .vs-badge {
+        background: var(--dim);
+        padding: 0.2rem 0.5rem;
+        font-size: 0.8rem;
+      }
+      .pros,
+      .cons {
+        margin: 1rem 0;
+      }
+      .pros li {
+        color: var(--fg);
+      }
+      .pros li::before {
+        content: "+ ";
+      }
+      .cons li {
+        color: var(--red);
+      }
+      .cons li::before {
+        content: "- ";
+      }
+      .summary {
+        background: var(--dimmer);
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-left: 3px solid var(--fg);
+      }
+      .summary h3 {
+        margin-top: 0;
+        color: var(--fg);
+      }
+      @media (max-width: 768px) {
+        table {
+          font-size: 0.8rem;
+        }
+        th,
+        td {
+          padding: 0.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="nav">
+        <a href="/">[ HOME ]</a>
+        <a href="/api.html">[ API ]</a>
+        <a href="/use-cases.html">[ USE CASES ]</a>
+        <a href="/comparison.html">[ COMPARISON ]</a>
+        <a href="/faq.html">[ FAQ ]</a>
+        <a href="/docs.html">[ DOCS ]</a>
+      </div>
+
+      <header>
+        <h1>&gt; COMPETITOR_COMPARISON</h1>
+        <p class="tagline">How volatile.sh compares to other secret sharing solutions</p>
+      </header>
+
+      <h2>Feature Comparison at a Glance</h2>
+      <table class="vs-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th>volatile.sh</th>
+            <th>PrivNote</th>
+            <th>OneTimeSecret</th>
+            <th>Password Pusher</th>
+            <th>Bitwarden Send</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="highlight-row">
+            <td><strong>Open Source</strong></td>
+            <td><span class="check"></span></td>
+            <td><span class="cross"></span></td>
+            <td><span class="partial"></span></td>
+            <td><span class="check"></span></td>
+            <td><span class="check"></span></td>
+          </tr>
+          <tr class="highlight-row">
+            <td><strong>Client-Side Encryption</strong></td>
+            <td><span class="check"></span></td>
+            <td><span class="check"></span></td>
+            <td><span class="cross"></span></td>
+            <td><span class="check"></span></td>
+            <td><span class="check"></span></td>
+          </tr>
+          <tr class="highlight-row">
+            <td><strong>Zero-Knowledge</strong></td>
+            <td><span class="check"></span></td>
+            <td><span class="partial"></span></td>
+            <td><span class="cross"></span></td>
+            <td><span class="check"></span></td>
+            <td><span class="check"></span></td>
+          </tr>
+          <tr class="highlight-row">
+            <td><strong>No Account Required</strong></td>
+            <td><span class="check"></span></td>
+            <td><span class="check"></span></td>
+            <td><span class="check"></span></td>
+            <td><span class="check"></span></td>
+            <td><span class="partial"></span></td>
+          </tr>
+          <tr class="highlight-row">
+            <td><strong>Self-Hostable</strong></td>
+            <td><span class="check"></span></td>
+            <td><span class="cross"></span></td>
+            <td><span class="partial"></span></td>
+            <td><span class="check"></span></td>
+            <td><span class="partial"></span></td>
+          </tr>
+          <tr class="highlight-row">
+            <td><strong>API Access</strong></td>
+            <td><span class="check"></span></td>
+            <td><span class="cross"></span></td>
+            <td><span class="check"></span></td>
+            <td><span class="check"></span></td>
+            <td><span class="check"></span></td>
+          </tr>
+          <tr class="highlight-row">
+            <td><strong>Edge Network (Cloudflare)</strong></td>
+            <td><span class="check"></span></td>
+            <td><span class="cross"></span></td>
+            <td><span class="cross"></span></td>
+            <td><span class="cross"></span></td>
+            <td><span class="partial"></span></td>
+          </tr>
+          <tr class="highlight-row">
+            <td><strong>No Logging</strong></td>
+            <td><span class="check"></span></td>
+            <td><span class="partial"></span></td>
+            <td><span class="cross"></span></td>
+            <td><span class="partial"></span></td>
+            <td><span class="check"></span></td>
+          </tr>
+          <tr>
+            <td><strong>Custom TTL (5min-7day)</strong></td>
+            <td><span class="check"></span></td>
+            <td><span class="check"></span></td>
+            <td><span class="check"></span></td>
+            <td><span class="check"></span></td>
+            <td><span class="partial"></span></td>
+          </tr>
+          <tr>
+            <td><strong>Rate Limiting</strong></td>
+            <td><span class="check"></span></td>
+            <td><span class="partial"></span></td>
+            <td><span class="cross"></span></td>
+            <td><span class="partial"></span></td>
+            <td><span class="check"></span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="summary">
+        <h3>Why Choose volatile.sh?</h3>
+        <p>
+          volatile.sh combines the best features of all alternatives: <strong>open source</strong>,
+          <strong>zero-knowledge</strong>, <strong>no account required</strong>, and built on
+          <strong>Cloudflare's edge network</strong> for global performance. We're transparent about
+          our code, honest about our security model, and don't require any personal information.
+        </p>
+      </div>
+
+      <h2>Detailed Comparisons</h2>
+
+      <div class="competitor">
+        <h3>vs PrivNote <span class="vs-badge">CLOSEST COMPETITOR</span></h3>
+        <p>
+          PrivNote is one of the oldest and most well-known secure note services. While it offers
+          similar functionality, there are key differences.
+          <a href="/compare/volatile-vs-privnote.html">Read full comparison</a>
+        </p>
+
+        <h4>Where volatile.sh Wins:</h4>
+        <ul class="pros">
+          <li><strong>Open source:</strong> Our code is publicly auditable on GitHub</li>
+          <li><strong>Self-hostable:</strong> Deploy to your own Cloudflare account</li>
+          <li><strong>Edge deployment:</strong> Cloudflare Workers for global low latency</li>
+          <li><strong>No proprietary extensions:</strong> Uses only Web Crypto API</li>
+          <li><strong>Transparent rate limiting:</strong> Clear limits published in API docs</li>
+        </ul>
+
+        <h4>Where PrivNote Wins:</h4>
+        <ul class="cons">
+          <li>Longer track record (established 2008)</li>
+          <li>Email notification option when note is read</li>
+          <li>Reference/confirmation codes</li>
+          <li>Manual destruction option</li>
+        </ul>
+
+        <h4>Key Difference:</h4>
+        <p>
+          <strong>Transparency.</strong> PrivNote is closed-source proprietary software. You must
+          trust their claims about security. volatile.sh is fully open source—you can verify every
+          line of code, audit the encryption implementation, and even run your own instance.
+        </p>
+      </div>
+
+      <div class="competitor">
+        <h3>vs OneTimeSecret <span class="vs-badge">API-FOCUSED</span></h3>
+        <p>
+          OneTimeSecret (OTS) is a popular open-source tool originally released by the team at
+          DailyMotion. It has a strong focus on API usage.
+        </p>
+
+        <h4>Where volatile.sh Wins:</h4>
+        <ul class="pros">
+          <li>
+            <strong>True zero-knowledge:</strong> Client-side encryption, server never sees
+            plaintext
+          </li>
+          <li><strong>Edge hosting:</strong> Cloudflare Workers vs traditional VPS hosting</li>
+          <li><strong>Better DDoS protection:</strong> Built-in Cloudflare protection</li>
+          <li><strong>No database:</strong> Durable Objects with automatic expiration</li>
+          <li><strong>Simpler deployment:</strong> No server management required</li>
+        </ul>
+
+        <h4>Where OneTimeSecret Wins:</h4>
+        <ul class="cons">
+          <li>More mature API with advanced features</li>
+          <li>Team/business plans available</li>
+          <li>Custom domains for self-hosted versions</li>
+          <li>More configuration options</li>
+        </ul>
+
+        <h4>Key Difference:</h4>
+        <p>
+          <strong>Encryption model.</strong> OneTimeSecret encrypts server-side—the plaintext secret
+          is transmitted to their server, then encrypted and stored. volatile.sh encrypts
+          <strong>client-side</strong> before transmission, meaning the server never has access to
+          the plaintext at any point.
+        </p>
+      </div>
+
+      <div class="competitor">
+        <h3>vs Password Pusher <span class="vs-badge">FEATURE-RICH</span></h3>
+        <p>
+          Password Pusher (pwpush.com) is an open-source tool focused on sharing passwords and other
+          sensitive data.
+        </p>
+
+        <h4>Where volatile.sh Wins:</h4>
+        <ul class="pros">
+          <li><strong>Simpler architecture:</strong> Purpose-built for ephemeral secrets</li>
+          <li><strong>Edge performance:</strong> Cloudflare Workers global distribution</li>
+          <li><strong>Zero-knowledge by default:</strong> URL fragment key separation</li>
+          <li><strong>Smaller attack surface:</strong> Minimal codebase, fewer dependencies</li>
+          <li><strong>Faster deployment:</strong> Single command Cloudflare deployment</li>
+        </ul>
+
+        <h4>Where Password Pusher Wins:</h4>
+        <ul class="cons">
+          <li>More features (file uploads, passwords in URLs)</li>
+          <li>Docker deployment option</li>
+          <li>Active community and frequent updates</li>
+          <li>More authentication options</li>
+        </ul>
+
+        <h4>Key Difference:</h4>
+        <p>
+          <strong>Architecture philosophy.</strong> Password Pusher is a full-featured application
+          with many options. volatile.sh is laser-focused on doing one thing perfectly:
+          zero-knowledge, burn-after-reading text sharing. Our simpler approach means a smaller
+          attack surface and easier security auditing.
+        </p>
+      </div>
+
+      <div class="competitor">
+        <h3>vs Bitwarden Send <span class="vs-badge">PASSWORD MANAGER</span></h3>
+        <p>
+          Bitwarden Send is a feature of the Bitwarden password manager that allows temporary
+          sharing of sensitive data.
+        </p>
+
+        <h4>Where volatile.sh Wins:</h4>
+        <ul class="pros">
+          <li><strong>No account required:</strong> Completely anonymous</li>
+          <li><strong>No password manager tie-in:</strong> Standalone service</li>
+          <li><strong>Burn-after-reading:</strong> Immediate deletion on access</li>
+          <li><strong>Open source core:</strong> MIT licensed</li>
+          <li><strong>Lighter weight:</strong> No dependencies or ecosystem lock-in</li>
+        </ul>
+
+        <h4>Where Bitwarden Send Wins:</h4>
+        <ul class="cons">
+          <li>Integrated with existing Bitwarden vault</li>
+          <li>File sharing support</li>
+          <li>Mobile app integration</li>
+          <li>Verification option (password required to view)</li>
+        </ul>
+
+        <h4>Key Difference:</h4>
+        <p>
+          <strong>Ecosystem vs standalone.</strong> Bitwarden Send is great if you already use
+          Bitwarden. volatile.sh is designed for anyone who needs quick, secure sharing without
+          creating an account, installing software, or joining an ecosystem.
+        </p>
+      </div>
+
+      <h2>Comparison by Use Case</h2>
+      <table class="vs-table">
+        <thead>
+          <tr>
+            <th>Use Case</th>
+            <th>Best Choice</th>
+            <th>Why</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Quick one-time password share</td>
+            <td>volatile.sh</td>
+            <td>No account, instant, no trace</td>
+          </tr>
+          <tr>
+            <td>Team password management</td>
+            <td>Bitwarden Send</td>
+            <td>Integrated with vault</td>
+          </tr>
+          <tr>
+            <td>API integration for automation</td>
+            <td>volatile.sh</td>
+            <td>Simple REST API, no auth</td>
+          </tr>
+          <tr>
+            <td>Self-hosted enterprise solution</td>
+            <td>OneTimeSecret</td>
+            <td>More configuration options</td>
+          </tr>
+          <tr>
+            <td>Email notifications needed</td>
+            <td>PrivNote</td>
+            <td>Built-in email notifications</td>
+          </tr>
+          <tr>
+            <td>Maximum transparency</td>
+            <td>volatile.sh</td>
+            <td>Open source + zero-knowledge</td>
+          </tr>
+          <tr>
+            <td>File sharing</td>
+            <td>Password Pusher</td>
+            <td>Native file upload support</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Technical Architecture Comparison</h2>
+      <table class="vs-table">
+        <thead>
+          <tr>
+            <th>Aspect</th>
+            <th>volatile.sh</th>
+            <th>Others</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Hosting</strong></td>
+            <td>Cloudflare Workers (Edge)</td>
+            <td>VPS / Cloud / Traditional hosting</td>
+          </tr>
+          <tr>
+            <td><strong>Storage</strong></td>
+            <td>Durable Objects (in-memory)</td>
+            <td>Database (Redis, PostgreSQL, etc.)</td>
+          </tr>
+          <tr>
+            <td><strong>Encryption</strong></td>
+            <td>AES-256-GCM (client-side)</td>
+            <td>Varies (often server-side)</td>
+          </tr>
+          <tr>
+            <td><strong>Key storage</strong></td>
+            <td>URL fragment only</td>
+            <td>Database or additional parameter</td>
+          </tr>
+          <tr>
+            <td><strong>Runtime</strong></td>
+            <td>V8 isolates (JavaScript)</td>
+            <td>Various (Ruby, Python, Go, etc.)</td>
+          </tr>
+          <tr>
+            <td><strong>DDoS protection</strong></td>
+            <td>Cloudflare built-in</td>
+            <td>Varies (often additional service)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Pricing Comparison</h2>
+      <table class="vs-table">
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Free Tier</th>
+            <th>Paid Plans</th>
+            <th>Self-Hosted</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="highlight-row">
+            <td>volatile.sh</td>
+            <td>Unlimited</td>
+            <td>N/A (free forever)</td>
+            <td>Free (your Cloudflare)</td>
+          </tr>
+          <tr>
+            <td>PrivNote</td>
+            <td>Unlimited</td>
+            <td>Available</td>
+            <td>Not available</td>
+          </tr>
+          <tr>
+            <td>OneTimeSecret</td>
+            <td>Limited</td>
+            <td>Available</td>
+            <td>Free (self-hosted)</td>
+          </tr>
+          <tr>
+            <td>Password Pusher</td>
+            <td>Unlimited</td>
+            <td>Donation-based</td>
+            <td>Free (self-hosted)</td>
+          </tr>
+          <tr>
+            <td>Bitwarden Send</td>
+            <td>Limited (with account)</td>
+            <td>Premium required</td>
+            <td>Paid license</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="summary">
+        <h3>The volatile.sh Advantage</h3>
+        <p>
+          <strong>volatile.sh is free and open source, forever.</strong> We don't have premium
+          tiers, hidden fees, or usage limits. The hosted version is free to use, and if you want to
+          self-host, the code is MIT-licensed—deploy to your own Cloudflare account for the cost of
+          Cloudflare's free tier (which is also free).
+        </p>
+      </div>
+
+      <h2>Make the Switch</h2>
+      <p>
+        Migrating from another service is simple—just start using volatile.sh for your next secret.
+        No setup, no migration needed. And if you need to integrate with your existing workflows,
+        our <a href="/api.html">RESTful API</a> makes it easy.
+      </p>
+      <ul>
+        <li><a href="/">Try volatile.sh now</a></li>
+        <li><a href="/api.html">Read the API documentation</a></li>
+        <li>
+          <a href="https://github.com/user/volatile.sh" target="_blank" rel="noopener"
+            >Star us on GitHub</a
+          >
+        </li>
+        <li><a href="/docs.html">Deploy your own instance</a></li>
+      </ul>
+
+      <p class="muted" style="margin-top: 2rem">
+        <a href="/">← Back to volatile.sh</a> ·
+        <a href="/security.html">Security Details →</a>
+      </p>
+    </div>
+  </body>
+</html>

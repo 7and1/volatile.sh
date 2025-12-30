@@ -248,7 +248,7 @@ function errorResponse(
   code: string,
   status: number,
   requestId: string,
-  headers: Record<string, string> = {},
+  headers: Record<string, string> = {}
 ): Response {
   return new Response(
     JSON.stringify({
@@ -266,7 +266,7 @@ function errorResponse(
         "X-Request-ID": requestId,
         ...headers,
       },
-    },
+    }
   );
 }
 ```
@@ -306,7 +306,7 @@ export class SecretVault implements DurableObject {
         JSON.stringify({
           error: "SECRET_EXISTS",
         }),
-        { status: 409 },
+        { status: 409 }
       );
     }
 
@@ -318,7 +318,7 @@ export class SecretVault implements DurableObject {
         JSON.stringify({
           error: "INVALID_PAYLOAD",
         }),
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -340,7 +340,7 @@ export class SecretVault implements DurableObject {
         success: true,
         expiresAt: new Date(Date.now() + (body.ttl || 86400000)).toISOString(),
       }),
-      { status: 201 },
+      { status: 201 }
     );
   }
 
@@ -418,10 +418,7 @@ export class SecretVault implements DurableObject {
 
 ```typescript
 // Robust secret retrieval with retry logic
-async function retrieveSecret(
-  secretId: string,
-  key: string,
-): Promise<SecretResult> {
+async function retrieveSecret(secretId: string, key: string): Promise<SecretResult> {
   const maxRetries = 3;
   const baseDelay = 1000;
 
@@ -451,9 +448,7 @@ async function retrieveSecret(
       }
 
       if (response.status === 429) {
-        const retryAfter = parseInt(
-          response.headers.get("Retry-After") || "60",
-        );
+        const retryAfter = parseInt(response.headers.get("Retry-After") || "60");
         if (attempt < maxRetries) {
           await sleep(retryAfter * 1000);
           continue;
@@ -607,17 +602,14 @@ const RATE_LIMITS: Record<string, RateLimitConfig> = {
 async function checkRateLimit(
   request: Request,
   action: string,
-  env: Env,
+  env: Env
 ): Promise<RateLimitResult> {
   const config = RATE_LIMITS[action];
   const ip = request.headers.get("CF-Connecting-IP") || "unknown";
   const key = `${config.keyPrefix}${ip}`;
 
   // Use Cloudflare KV for distributed rate limiting
-  const current = (await env.RATE_LIMITS.get(
-    key,
-    "json",
-  )) as RateLimitState | null;
+  const current = (await env.RATE_LIMITS.get(key, "json")) as RateLimitState | null;
   const now = Date.now();
 
   if (!current || now > current.windowEnd) {
@@ -628,7 +620,7 @@ async function checkRateLimit(
         count: 1,
         windowEnd: now + config.window * 1000,
       }),
-      { expirationTtl: config.window * 2 },
+      { expirationTtl: config.window * 2 }
     );
 
     return { ok: true, remaining: config.maxRequests - 1 };
@@ -751,7 +743,7 @@ async function healthCheck(env: Env): Promise<Response> {
     {
       status: allHealthy ? 200 : 503,
       headers: { "Content-Type": "application/json" },
-    },
+    }
   );
 }
 ```

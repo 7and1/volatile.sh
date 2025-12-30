@@ -11,6 +11,54 @@
     <meta name="robots" content="index,follow" />
     <meta name="theme-color" content="#050505" />
     <link rel="canonical" href="https://volatile.sh/docs.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Documentation - volatile.sh" />
+    <meta
+      property="og:description"
+      content="Technical documentation for volatile.sh - how to use, API, security details."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://volatile.sh/docs.html" />
+    <meta property="og:site_name" content="volatile.sh" />
+    <meta property="og:image" content="https://volatile.sh/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Documentation - volatile.sh" />
+    <meta name="twitter:description" content="Technical documentation for volatile.sh." />
+    <meta name="twitter:image" content="https://volatile.sh/og-image.png" />
+    <meta name="author" content="volatile.sh Team" />
+
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://volatile.sh/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Documentation",
+            "item": "https://volatile.sh/docs.html"
+          }
+        ]
+      }
+    </script>
     <style>
       :root {
         --bg: #050505;
@@ -26,8 +74,7 @@
         padding: 1.5rem;
         background: var(--bg);
         color: var(--fg);
-        font-family:
-          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         line-height: 1.6;
       }
       .container {
@@ -145,10 +192,11 @@
     <div class="container">
       <div class="nav">
         <a href="/">[ HOME ]</a>
+        <a href="/api.html">[ API ]</a>
+        <a href="/use-cases.html">[ USE CASES ]</a>
+        <a href="/comparison.html">[ COMPARISON ]</a>
         <a href="/faq.html">[ FAQ ]</a>
-        <a href="/security.html">[ SECURITY ]</a>
-        <a href="/privacy.html">[ PRIVACY ]</a>
-        <a href="/terms.html">[ TERMS ]</a>
+        <a href="/docs.html">[ DOCS ]</a>
       </div>
 
       <header>
@@ -170,27 +218,20 @@
       <h2>How It Works</h2>
       <p>volatile.sh uses a zero-knowledge architecture:</p>
       <ol>
+        <li><strong>Key Generation:</strong> Your browser generates a random AES-256-GCM key</li>
         <li>
-          <strong>Key Generation:</strong> Your browser generates a random
-          AES-256-GCM key
+          <strong>Client Encryption:</strong> Your secret is encrypted locally before any data
+          leaves your device
         </li>
         <li>
-          <strong>Client Encryption:</strong> Your secret is encrypted locally
-          before any data leaves your device
+          <strong>Key in Fragment:</strong> The decryption key is embedded in the URL fragment
+          (<code>#key</code>), which browsers never send to servers
         </li>
         <li>
-          <strong>Key in Fragment:</strong> The decryption key is embedded in
-          the URL fragment (<code>#key</code>), which browsers never send to
-          servers
+          <strong>Server Storage:</strong> Only the encrypted ciphertext and IV are stored on the
+          server
         </li>
-        <li>
-          <strong>Server Storage:</strong> Only the encrypted ciphertext and IV
-          are stored on the server
-        </li>
-        <li>
-          <strong>One-Time Read:</strong> When retrieved, the secret is deleted
-          immediately
-        </li>
+        <li><strong>One-Time Read:</strong> When retrieved, the secret is deleted immediately</li>
       </ol>
 
       <h2>Time-To-Live Options</h2>
@@ -219,17 +260,10 @@
 
       <h2>Use Cases</h2>
       <ul>
-        <li>
-          <strong>API Keys:</strong> Share temporary access tokens securely
-        </li>
+        <li><strong>API Keys:</strong> Share temporary access tokens securely</li>
         <li><strong>Passwords:</strong> Send initial passwords to new users</li>
-        <li>
-          <strong>Confidential Info:</strong> Share sensitive business data
-        </li>
-        <li>
-          <strong>Journalist Sources:</strong> Secure whistleblower
-          communication
-        </li>
+        <li><strong>Confidential Info:</strong> Share sensitive business data</li>
+        <li><strong>Journalist Sources:</strong> Secure whistleblower communication</li>
         <li><strong>Emergency Notes:</strong> Self-destructing messages</li>
       </ul>
 
@@ -239,9 +273,7 @@
       <pre><code>Response: { "ok": true }</code></pre>
 
       <h3>Create Secret</h3>
-      <div class="endpoint">
-        <span class="method post">POST</span>/api/secrets
-      </div>
+      <div class="endpoint"><span class="method post">POST</span>/api/secrets</div>
       <pre><code>Request Body:
 {
   "encrypted": "base64url-encoded ciphertext",
@@ -256,9 +288,7 @@ Response:
 }</code></pre>
 
       <h3>Read Secret</h3>
-      <div class="endpoint">
-        <span class="method get">GET</span>/api/secrets/:id
-      </div>
+      <div class="endpoint"><span class="method get">GET</span>/api/secrets/:id</div>
       <pre><code>Response (first read):
 {
   "encrypted": "base64url-encoded ciphertext",
@@ -355,9 +385,7 @@ const ciphertext = await crypto.subtle.encrypt(
       <p>volatile.sh requires a browser that supports:</p>
       <ul>
         <li><strong>Web Crypto API</strong> - For client-side encryption</li>
-        <li>
-          <strong>Secure Context</strong> (HTTPS) - Required for Web Crypto
-        </li>
+        <li><strong>Secure Context</strong> (HTTPS) - Required for Web Crypto</li>
         <li><strong>Modern JavaScript</strong> - ES2020+ features</li>
       </ul>
       <p>Supported browsers: Chrome 90+, Firefox 88+, Safari 15+, Edge 90+</p>
@@ -367,9 +395,7 @@ const ciphertext = await crypto.subtle.encrypt(
       <ol>
         <li>Fork the repository on GitHub</li>
         <li>Install dependencies: <code>npm install</code></li>
-        <li>
-          Configure <code>wrangler.toml</code> with your Cloudflare account
-        </li>
+        <li>Configure <code>wrangler.toml</code> with your Cloudflare account</li>
         <li>
           Build the frontend:
           <code>cd volatile.sh-front.sh && npm run build</code>
@@ -383,15 +409,10 @@ const ciphertext = await crypto.subtle.encrypt(
           Always share the full link including the fragment (everything after
           <code>#</code>)
         </li>
-        <li>
-          Share links through secure channels (encrypted messaging, in person)
-        </li>
+        <li>Share links through secure channels (encrypted messaging, in person)</li>
         <li>Avoid using link preview features in chat apps</li>
         <li>Be aware that anyone with the link can decrypt the secret</li>
-        <li>
-          Consider the recipient's environment—do they have screen recording or
-          monitoring?
-        </li>
+        <li>Consider the recipient's environment—do they have screen recording or monitoring?</li>
       </ul>
 
       <p class="muted" style="margin-top: 2rem">

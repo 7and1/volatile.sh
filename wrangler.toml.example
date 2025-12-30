@@ -1,22 +1,44 @@
+# volatile.sh - Zero-Knowledge Secret Sharing
+# Cloudflare Workers Configuration Template
+#
+# SETUP INSTRUCTIONS:
+# 1. Copy this file: cp wrangler.toml.example wrangler.toml
+# 2. Set environment variable: export CLOUDFLARE_ACCOUNT_ID="your_account_id"
+# 3. Create KV namespaces (see comments below)
+# 4. Update KV namespace IDs in wrangler.toml
+# 5. Deploy: npm run deploy
+
 name = "volatile-sh"
 main = "src/index.js"
 compatibility_date = "2024-12-01"
 
-# Account ID should be set via environment variable CLOUDFLARE_ACCOUNT_ID
-# or copied from this example to wrangler.toml (not tracked in git)
-# account_id = "YOUR_ACCOUNT_ID_HERE"
+# NOTE: account_id is NOT specified here for security
+# Set via environment variable: CLOUDFLARE_ACCOUNT_ID
+# Or pass via CLI: wrangler deploy --account-id YOUR_ACCOUNT_ID
 
-# Custom domain routes
-routes = [
-  { pattern = "volatile.sh", custom_domain = true },
-  { pattern = "www.volatile.sh", custom_domain = true }
-]
+# Workers.dev domain (enabled by default for development)
+workers_dev = true
 
-# Serve static files from /public
+# Custom domain routes (configure after setting up custom domain)
+# Step 1: Add custom domain in Cloudflare Dashboard > Workers & Pages > Settings > Domains
+# Step 2: Uncomment routes and set workers_dev = false
+# routes = [
+#   { pattern = "volatile.sh", custom_domain = true },
+#   { pattern = "www.volatile.sh", custom_domain = true }
+# ]
+
+# Serve static files from /dist (built frontend)
 [assets]
 directory = "./dist"
 
-# Durable Object bindings
+# KV namespace for security data (IP blacklist, etc.)
+# Create with: wrangler kv namespace create "SECURITY_KV"
+# Then update the id below with the returned ID
+[[kv_namespaces]]
+binding = "SECURITY_KV"
+id = "YOUR_KV_NAMESPACE_ID"
+
+# Durable Object bindings for stateful storage
 [[durable_objects.bindings]]
 name = "SECRETS"
 class_name = "SecretStore"
@@ -33,3 +55,50 @@ new_classes = ["SecretStore"]
 [[migrations]]
 tag = "v2"
 new_classes = ["RateLimiter"]
+
+# Environment variables
+[vars]
+ENVIRONMENT = "development"
+# ALLOWED_ORIGINS = "https://volatile.sh,https://www.volatile.sh"
+
+# Secrets (set via wrangler secret put):
+# - SENTRY_DSN: Error tracking DSN
+# - ALERT_WEBHOOK_URL: Slack/Discord webhook for alerts
+
+# ============================================================================
+# STAGING ENVIRONMENT - Deploy with: wrangler deploy --env staging
+# ============================================================================
+[env.staging]
+name = "volatile-sh-staging"
+workers_dev = true
+
+[env.staging.vars]
+ENVIRONMENT = "staging"
+LOG_LEVEL = "debug"
+
+# Create with: wrangler kv namespace create "SECURITY_KV" --env staging
+[[env.staging.kv_namespaces]]
+binding = "SECURITY_KV"
+id = "YOUR_STAGING_KV_NAMESPACE_ID"
+
+# ============================================================================
+# PRODUCTION ENVIRONMENT - Deploy with: wrangler deploy --env production
+# ============================================================================
+[env.production]
+name = "volatile-sh"
+workers_dev = false
+
+# Production routes (configure your domain)
+# routes = [
+#   { pattern = "volatile.sh", custom_domain = true },
+#   { pattern = "www.volatile.sh", custom_domain = true }
+# ]
+
+[env.production.vars]
+ENVIRONMENT = "production"
+LOG_LEVEL = "warn"
+
+# Create with: wrangler kv namespace create "SECURITY_KV" --env production
+[[env.production.kv_namespaces]]
+binding = "SECURITY_KV"
+id = "YOUR_PRODUCTION_KV_NAMESPACE_ID"

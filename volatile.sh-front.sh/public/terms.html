@@ -11,6 +11,53 @@
     <meta name="robots" content="index,follow" />
     <meta name="theme-color" content="#050505" />
     <link rel="canonical" href="https://volatile.sh/terms.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Terms of Service - volatile.sh" />
+    <meta
+      property="og:description"
+      content="Terms of service for volatile.sh - zero-knowledge secret sharing service."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://volatile.sh/terms.html" />
+    <meta property="og:site_name" content="volatile.sh" />
+    <meta property="og:image" content="https://volatile.sh/og-image.svg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/svg+xml" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Terms of Service - volatile.sh" />
+    <meta name="twitter:description" content="Terms of service for volatile.sh." />
+    <meta name="twitter:image" content="https://volatile.sh/og-image.svg" />
+
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://volatile.sh/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Terms of Service",
+            "item": "https://volatile.sh/terms.html"
+          }
+        ]
+      }
+    </script>
     <style>
       :root {
         --bg: #050505;
@@ -27,8 +74,7 @@
         padding: 1.5rem;
         background: var(--bg);
         color: var(--fg);
-        font-family:
-          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         line-height: 1.7;
       }
       .container {
@@ -121,57 +167,82 @@
         <p class="updated">Last updated: December 2024</p>
       </header>
 
-      <h2>1. Acceptance of Terms</h2>
+      <div
+        class="summary"
+        style="
+          background: var(--dimmer);
+          padding: 1.5rem;
+          margin: 1.5rem 0;
+          border-left: 3px solid var(--fg);
+        "
+      >
+        <h3 style="margin-top: 0; color: var(--fg)">Summary</h3>
+        <ul>
+          <li>
+            <strong>Free Service:</strong> volatile.sh is completely free to use with no premium
+            tiers
+          </li>
+          <li>
+            <strong>No Warranties:</strong> Service is provided "as is" without guarantees of
+            availability or security
+          </li>
+          <li>
+            <strong>Your Responsibility:</strong> You are solely responsible for content you share
+          </li>
+          <li>
+            <strong>Zero-Knowledge:</strong> We cannot access your secrets due to our encryption
+            architecture
+          </li>
+          <li>
+            <strong>Ephemeral Storage:</strong> Secrets are auto-deleted and cannot be recovered
+          </li>
+          <li>
+            <strong>Acceptable Use:</strong> No illegal content, spam, or abuse of rate limits
+          </li>
+        </ul>
+        <p style="margin-top: 1rem; margin-bottom: 0">
+          <a href="#full-terms">Read full terms below →</a>
+        </p>
+      </div>
+
+      <h2 id="full-terms">1. Acceptance of Terms</h2>
       <p>
-        By accessing or using volatile.sh (the "Service"), you agree to be bound
-        by these Terms of Service. If you do not agree to these terms, please do
-        not use the Service.
+        By accessing or using volatile.sh (the "Service"), you agree to be bound by these Terms of
+        Service. If you do not agree to these terms, please do not use the Service.
       </p>
 
       <h2>2. Description of Service</h2>
       <p>
-        volatile.sh is a zero-knowledge, burn-after-reading secret sharing
-        service. The Service allows users to:
+        volatile.sh is a zero-knowledge, burn-after-reading secret sharing service. The Service
+        allows users to:
       </p>
       <ul>
         <li>Encrypt secrets in their browser using AES-256-GCM</li>
         <li>Store encrypted secrets temporarily (5 minutes to 7 days)</li>
-        <li>
-          Share secrets via a unique link that includes the decryption key
-        </li>
+        <li>Share secrets via a unique link that includes the decryption key</li>
         <li>Have secrets automatically deleted after being read once</li>
       </ul>
 
       <h2>3. Acceptable Use Policy</h2>
       <p>You agree NOT to use the Service to:</p>
       <ul>
-        <li>
-          Share illegal content, including illegal images, documents, or data
-        </li>
+        <li>Share illegal content, including illegal images, documents, or data</li>
         <li>Distribute malware, viruses, or harmful code</li>
         <li>Violate any applicable laws or regulations</li>
         <li>Infringe on intellectual property rights</li>
         <li>Harass, abuse, or harm others</li>
-        <li>
-          Attempt to probe, scan, or test the vulnerability of the Service
-        </li>
+        <li>Attempt to probe, scan, or test the vulnerability of the Service</li>
         <li>Attempt to access the Service through unauthorized means</li>
-        <li>
-          Spam or abuse the rate limits (currently 100 creates/hour, 1000
-          reads/hour)
-        </li>
+        <li>Spam or abuse the rate limits (currently 100 creates/hour, 1000 reads/hour)</li>
       </ul>
       <div class="warning" style="margin-top: 1rem">
-        <p>
-          <strong>Violation:</strong> We reserve the right to terminate access
-          for violations.
-        </p>
+        <p><strong>Violation:</strong> We reserve the right to terminate access for violations.</p>
       </div>
 
       <h2>4. Content and Responsibility</h2>
       <p>
-        <strong>You are solely responsible</strong> for any content you create
-        or share using the Service. Because we use zero-knowledge encryption:
+        <strong>You are solely responsible</strong> for any content you create or share using the
+        Service. Because we use zero-knowledge encryption:
       </p>
       <ul>
         <li>We cannot see, moderate, or remove specific secrets</li>
@@ -179,16 +250,13 @@
         <li>We cannot recover lost or deleted secrets</li>
       </ul>
       <p class="muted">
-        If you discover illegal content being shared through the Service, please
-        report it immediately to abuse@volatile.sh with the secret ID (if
-        known).
+        If you discover illegal content being shared through the Service, please report it
+        immediately to abuse@volatile.sh with the secret ID (if known).
       </p>
 
       <h2>5. Service Availability and Modifications</h2>
       <p>
-        <strong
-          >The Service is provided "as is" without warranty of any kind.</strong
-        >
+        <strong>The Service is provided "as is" without warranty of any kind.</strong>
         We reserve the right to:
       </p>
       <ul>
@@ -202,76 +270,61 @@
       <p>By using the Service, you acknowledge and agree that:</p>
       <ul>
         <li>Secrets are deleted after reading and cannot be recovered</li>
-        <li>
-          Lost links cannot be recovered (the link contains the decryption key)
-        </li>
-        <li>
-          We cannot access your encrypted secrets (zero-knowledge architecture)
-        </li>
+        <li>Lost links cannot be recovered (the link contains the decryption key)</li>
+        <li>We cannot access your encrypted secrets (zero-knowledge architecture)</li>
         <li>Anyone with the full link can decrypt the secret</li>
         <li>You are responsible for securing the links you create</li>
       </ul>
-      <p>
-        For more details, see our <a href="/privacy.html">Privacy Policy</a>.
-      </p>
+      <p>For more details, see our <a href="/privacy.html">Privacy Policy</a>.</p>
 
       <h2>7. DMCA and Copyright</h2>
       <p>
-        If you believe your copyrighted work has been shared through the Service
-        in a way that constitutes copyright infringement, please notify us at:
+        If you believe your copyrighted work has been shared through the Service in a way that
+        constitutes copyright infringement, please notify us at:
       </p>
       <ul>
         <li>Email: legal@volatile.sh</li>
         <li>Subject: DMCA Takedown Request</li>
       </ul>
       <p class="muted">
-        Please note: Due to the ephemeral nature of secrets, by the time we
-        receive a takedown request, the content may have already been
-        auto-deleted.
+        Please note: Due to the ephemeral nature of secrets, by the time we receive a takedown
+        request, the content may have already been auto-deleted.
       </p>
 
       <h2>8. Disclaimer of Warranties</h2>
       <p>
         <strong
-          >THE SERVICE IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND,
-          EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED
-          WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
-          TITLE, AND NON-INFRINGEMENT.</strong
+          >THE SERVICE IS PROVIDED "AS IS" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR
+          IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+          PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT.</strong
         >
       </p>
       <p>In particular:</p>
       <ul>
-        <li>
-          We do NOT guarantee the Service will be available 100% of the time
-        </li>
-        <li>
-          We do NOT guarantee secrets will never be lost due to technical issues
-        </li>
+        <li>We do NOT guarantee the Service will be available 100% of the time</li>
+        <li>We do NOT guarantee secrets will never be lost due to technical issues</li>
         <li>We do NOT guarantee protection against all security threats</li>
         <li>
-          We do NOT recommend using the Service for highly regulated data
-          (HIPAA, classified, etc.)
+          We do NOT recommend using the Service for highly regulated data (HIPAA, classified, etc.)
         </li>
       </ul>
 
       <h2>9. Limitation of Liability</h2>
       <p>
         <strong
-          >To the maximum extent permitted by law, volatile.sh and its operators
-          shall not be liable for any indirect, incidental, special,
-          consequential, or punitive damages.</strong
+          >To the maximum extent permitted by law, volatile.sh and its operators shall not be liable
+          for any indirect, incidental, special, consequential, or punitive damages.</strong
         >
       </p>
       <p>
-        In no event shall our total liability exceed the amount you paid, if
-        any, to use the Service (currently $0 for the free tier).
+        In no event shall our total liability exceed the amount you paid, if any, to use the Service
+        (currently $0 for the free tier).
       </p>
 
       <h2>10. Indemnification</h2>
       <p>
-        You agree to indemnify and hold harmless volatile.sh and its operators
-        from any claims, damages, losses, liabilities, and expenses (including
-        attorneys' fees) arising from:
+        You agree to indemnify and hold harmless volatile.sh and its operators from any claims,
+        damages, losses, liabilities, and expenses (including attorneys' fees) arising from:
       </p>
       <ul>
         <li>Your use of the Service</li>
@@ -282,15 +335,15 @@
 
       <h2>11. Governing Law</h2>
       <p>
-        These Terms shall be governed by and construed in accordance with
-        applicable laws. Any disputes arising under these Terms shall be subject
-        to the exclusive jurisdiction of the appropriate courts.
+        These Terms shall be governed by and construed in accordance with applicable laws. Any
+        disputes arising under these Terms shall be subject to the exclusive jurisdiction of the
+        appropriate courts.
       </p>
 
       <h2>12. Termination</h2>
       <p>
-        We may terminate or suspend your access to the Service immediately,
-        without prior notice, for:
+        We may terminate or suspend your access to the Service immediately, without prior notice,
+        for:
       </p>
       <ul>
         <li>Violation of these Terms</li>
@@ -301,21 +354,21 @@
 
       <h2>13. Changes to Terms</h2>
       <p>
-        We may modify these Terms at any time. Changes will be posted on this
-        page with an updated "Last updated" date. Your continued use of the
-        Service after changes constitutes acceptance of the new Terms.
+        We may modify these Terms at any time. Changes will be posted on this page with an updated
+        "Last updated" date. Your continued use of the Service after changes constitutes acceptance
+        of the new Terms.
       </p>
 
       <h2>14. Severability</h2>
       <p>
-        If any provision of these Terms is found to be unenforceable, the
-        remaining provisions shall remain in full force and effect.
+        If any provision of these Terms is found to be unenforceable, the remaining provisions shall
+        remain in full force and effect.
       </p>
 
       <h2>15. Entire Agreement</h2>
       <p>
-        These Terms constitute the entire agreement between you and volatile.sh
-        regarding the Service and supersede all prior agreements.
+        These Terms constitute the entire agreement between you and volatile.sh regarding the
+        Service and supersede all prior agreements.
       </p>
 
       <h2>16. Contact</h2>

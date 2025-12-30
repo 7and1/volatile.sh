@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About - volatile.sh</title>
+    <meta
+      name="description"
+      content="About volatile.sh - open source, zero-knowledge secret sharing built on Cloudflare Workers. Learn about our mission, technology, and team."
+    />
+    <meta
+      name="keywords"
+      content="volatile.sh about, zero-knowledge encryption, open source secret sharing, Cloudflare Workers, Durable Objects"
+    />
+    <meta name="robots" content="index,follow" />
+    <meta name="theme-color" content="#050505" />
+    <link rel="canonical" href="https://volatile.sh/about.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="About - volatile.sh" />
+    <meta
+      property="og:description"
+      content="Open source, zero-knowledge secret sharing built on Cloudflare Workers. Learn about our mission and technology."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://volatile.sh/about.html" />
+    <meta property="og:site_name" content="volatile.sh" />
+    <meta property="og:image" content="https://volatile.sh/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="About - volatile.sh" />
+    <meta
+      name="twitter:description"
+      content="Open source, zero-knowledge secret sharing built on Cloudflare Workers."
+    />
+    <meta name="twitter:image" content="https://volatile.sh/og-image.png" />
+    <meta name="author" content="volatile.sh Team" />
+
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "name": "About volatile.sh",
+        "description": "Open source, zero-knowledge secret sharing service built on Cloudflare Workers and Durable Objects",
+        "url": "https://volatile.sh/about.html",
+        "publisher": {
+          "@type": "Organization",
+          "name": "volatile.sh",
+          "url": "https://volatile.sh/",
+          "logo": "https://volatile.sh/og-image.svg",
+          "description": "Zero-knowledge secret sharing service",
+          "sameAs": ["https://github.com"]
+        }
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://volatile.sh/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "About",
+            "item": "https://volatile.sh/about.html"
+          }
+        ]
+      }
+    </script>
+
+    <style>
+      :root {
+        --bg: #050505;
+        --fg: #33ff00;
+        --dim: #1a8000;
+        --dimmer: #0c3d00;
+        --blue: #3b82f6;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 1.5rem;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        line-height: 1.7;
+      }
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      header {
+        margin-bottom: 2rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid var(--dimmer);
+      }
+      h1 {
+        font-size: 1.8rem;
+        margin: 0 0 0.5rem 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      .tagline {
+        font-size: 0.85rem;
+        opacity: 0.7;
+      }
+      h2 {
+        font-size: 1.3rem;
+        margin: 2.5rem 0 1rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid var(--dimmer);
+      }
+      h3 {
+        font-size: 1.1rem;
+        margin: 1.5rem 0 0.75rem 0;
+        color: var(--fg);
+      }
+      p,
+      li {
+        opacity: 0.9;
+        font-size: 0.95rem;
+      }
+      a {
+        color: var(--dim);
+        text-decoration: none;
+      }
+      a:hover {
+        color: var(--fg);
+        text-decoration: underline;
+      }
+      .muted {
+        color: var(--dim);
+      }
+      code {
+        color: var(--fg);
+        background: var(--dimmer);
+        padding: 0.15rem 0.4rem;
+        font-size: 0.9em;
+      }
+      .nav {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 0.85rem;
+      }
+      .nav a {
+        margin: 0 0.5rem;
+        opacity: 0.7;
+      }
+      .nav a:hover {
+        opacity: 1;
+      }
+      .values {
+        background: rgba(26, 128, 0, 0.1);
+        border: 1px solid var(--dim);
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 4px;
+      }
+      .values ul {
+        margin: 0;
+        padding-left: 1.5rem;
+      }
+      .values li {
+        margin-bottom: 0.5rem;
+      }
+      .cta {
+        background: var(--dimmer);
+        border-left: 3px solid var(--fg);
+        padding: 1.5rem;
+        margin: 2rem 0;
+      }
+      .cta h3 {
+        margin-top: 0;
+      }
+      .tech-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+      .tech-card {
+        background: var(--dimmer);
+        padding: 1rem;
+        border: 1px solid var(--dim);
+      }
+      .tech-card h4 {
+        margin: 0 0 0.5rem 0;
+        color: var(--fg);
+      }
+      .tech-card p {
+        margin: 0;
+        font-size: 0.85rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="nav">
+        <a href="/">[ HOME ]</a>
+        <a href="/docs.html">[ DOCS ]</a>
+        <a href="/security.html">[ SECURITY ]</a>
+        <a href="/about.html">[ ABOUT ]</a>
+      </div>
+
+      <header>
+        <h1>&gt; ABOUT_VOLATILE.SH</h1>
+        <p class="tagline">Open source, zero-knowledge secret sharing</p>
+      </header>
+
+      <h2>Our Mission</h2>
+      <p>
+        volatile.sh exists to provide a <strong>truly private</strong> way to share sensitive
+        information online. We believe privacy is a fundamental right, and the best way to protect
+        user data is to <strong>never have access to it in the first place</strong>.
+      </p>
+      <p>
+        Traditional secure messaging services still require you to trust the service provider.
+        volatile.sh eliminates that trust requirement through zero-knowledge architecture—the server
+        literally cannot access your data, even if compelled by law or hacked.
+      </p>
+
+      <h2>Our Values</h2>
+      <div class="values">
+        <ul>
+          <li>
+            <strong>Privacy by Design:</strong> Zero-knowledge architecture means we can't see your
+            secrets
+          </li>
+          <li>
+            <strong>Open Source:</strong> All code is publicly auditable on GitHub (MIT licensed)
+          </li>
+          <li>
+            <strong>No Lock-in:</strong> Self-host on your own Cloudflare account, completely free
+          </li>
+          <li>
+            <strong>Simplicity:</strong> No accounts, no tracking, no friction—just secure sharing
+          </li>
+          <li><strong>Transparency:</strong> Our security model is documented and verifiable</li>
+        </ul>
+      </div>
+
+      <h2>Technology Stack</h2>
+      <p>
+        volatile.sh is built on modern, cloud-native infrastructure designed for security,
+        performance, and reliability.
+      </p>
+      <div class="tech-grid">
+        <div class="tech-card">
+          <h4>Cloudflare Workers</h4>
+          <p>Edge compute platform with automatic DDoS protection and global distribution.</p>
+        </div>
+        <div class="tech-card">
+          <h4>Durable Objects</h4>
+          <p>Strongly consistent storage with automatic expiration and transactional operations.</p>
+        </div>
+        <div class="tech-card">
+          <h4>AES-256-GCM</h4>
+          <p>Military-grade encryption with authenticated encryption (AEAD) for integrity.</p>
+        </div>
+        <div class="tech-card">
+          <h4>Web Crypto API</h4>
+          <p>Native browser cryptography for secure client-side encryption.</p>
+        </div>
+      </div>
+
+      <h2>Zero-Knowledge Architecture</h2>
+      <p>The core innovation of volatile.sh is our zero-knowledge design. Here's how it works:</p>
+      <ol>
+        <li>
+          <strong>Key Generation:</strong> Your browser generates a random AES-256-GCM key using Web
+          Crypto API
+        </li>
+        <li>
+          <strong>Client Encryption:</strong> Your secret is encrypted locally before any data
+          leaves your device
+        </li>
+        <li>
+          <strong>Fragment Isolation:</strong> The decryption key is embedded in the URL fragment
+          (<code>#key</code>), which browsers <strong>never send to servers</strong> per RFC 3986
+        </li>
+        <li>
+          <strong>Ephemeral Storage:</strong> Only encrypted ciphertext is stored in RAM-only
+          Durable Objects, with automatic expiration
+        </li>
+        <li>
+          <strong>Burn After Reading:</strong> Secrets are deleted immediately upon retrieval,
+          leaving no trace
+        </li>
+      </ol>
+      <p class="muted">
+        This architecture means we technically <strong>cannot</strong> decrypt your secrets, even if
+        we wanted to. The encryption key never reaches our servers.
+      </p>
+
+      <h2>Open Source Philosophy</h2>
+      <p>volatile.sh is 100% open source under the <strong>MIT License</strong>. This means:</p>
+      <ul>
+        <li>You can review every line of code for security vulnerabilities</li>
+        <li>You can run your own instance on your own Cloudflare account</li>
+        <li>You can modify the code to fit your needs</li>
+        <li>You can contribute improvements back to the community</li>
+      </ul>
+      <p>
+        We believe security tools must be transparent. Closed-source "secure" messaging requires
+        blind trust in the provider. Open source allows independent verification of our security
+        claims.
+      </p>
+
+      <h2>Why Cloudflare Workers?</h2>
+      <p>We chose Cloudflare Workers as our platform for several reasons:</p>
+      <ul>
+        <li>
+          <strong>Edge Performance:</strong> Code runs in data centers worldwide, minimizing latency
+        </li>
+        <li>
+          <strong>Automatic Scaling:</strong> No server management—Cloudflare handles everything
+        </li>
+        <li><strong>DDoS Protection:</strong> Built-in protection against attacks at the edge</li>
+        <li>
+          <strong>Always-on TLS:</strong> HTTPS is enforced by default, required for Web Crypto API
+        </li>
+        <li>
+          <strong>Free Tier:</strong> Generous free tier makes self-hosting accessible to everyone
+        </li>
+      </ul>
+
+      <h2>Project History</h2>
+      <p>
+        volatile.sh was created to address a gap in the market: most "secure" note-sharing services
+        are either closed-source (requiring blind trust) or complex to self-host. We wanted to build
+        something that was:
+      </p>
+      <ul>
+        <li>Truly zero-knowledge (server cannot access data)</li>
+        <li>Fully open source (auditable by anyone)</li>
+        <li>Easy to self-host (single command deployment)</li>
+        <li>Free to use (no premium tiers or hidden costs)</li>
+      </ul>
+      <p>
+        The project launched in December 2024 and is actively maintained by the open-source
+        community.
+      </p>
+
+      <h2>Security & Audits</h2>
+      <p>
+        While we have not yet undergone a professional security audit, we follow security best
+        practices:
+      </p>
+      <ul>
+        <li>Minimal dependencies to reduce attack surface</li>
+        <li>Regular dependency vulnerability scanning</li>
+        <li>Static code analysis with ESLint and TypeScript strict mode</li>
+        <li>Comprehensive test coverage</li>
+        <li>Manual code review before each release</li>
+      </ul>
+      <p>
+        We are actively seeking independent security audits. If you represent a security firm and
+        would like to audit volatile.sh, please contact us at security@volatile.sh.
+      </p>
+
+      <div class="cta">
+        <h3>Get Involved</h3>
+        <p>volatile.sh is a community project. Here's how you can help:</p>
+        <ul>
+          <li>
+            <strong>Star us on GitHub</strong> — Show your support and help others discover us
+          </li>
+          <li><strong>Report Bugs</strong> — Open an issue if you find a problem</li>
+          <li><strong>Contribute Code</strong> — Pull requests are welcome</li>
+          <li><strong>Audit the Code</strong> — Security researchers: help us improve</li>
+          <li><strong>Spread the Word</strong> — Share volatile.sh with your community</li>
+        </ul>
+        <p style="margin-top: 1rem">
+          <a href="https://github.com/user/volatile.sh" target="_blank" rel="noopener"
+            >View Source Code on GitHub</a
+          >
+        </p>
+      </div>
+
+      <h2>Contact</h2>
+      <ul>
+        <li>
+          <strong>GitHub:</strong>
+          <a href="https://github.com/user/volatile.sh" target="_blank" rel="noopener"
+            >github.com/user/volatile.sh</a
+          >
+        </li>
+        <li>
+          <strong>Security:</strong> <a href="mailto:security@volatile.sh">security@volatile.sh</a>
+        </li>
+        <li><strong>Legal:</strong> <a href="mailto:legal@volatile.sh">legal@volatile.sh</a></li>
+      </ul>
+
+      <p class="muted" style="margin-top: 2rem">
+        <a href="/">← Back to volatile.sh</a> ·
+        <a href="/docs.html">Documentation →</a>
+      </p>
+    </div>
+  </body>
+</html>

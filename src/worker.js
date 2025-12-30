@@ -1,8 +1,23 @@
 import { handleApi } from "./api.js";
 import { json, securityHeaders, withHeaders } from "./http.js";
+import { generateSecurityTxt } from "./security.js";
 
 export async function handleRequest(request, env) {
   const url = new URL(request.url);
+
+  // Serve security.txt
+  if (url.pathname === "/.well-known/security.txt") {
+    const content = generateSecurityTxt(env);
+    return securityHeaders(
+      new Response(content, {
+        status: 200,
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "Cache-Control": "public, max-age=86400",
+        },
+      })
+    );
+  }
 
   if (url.pathname.startsWith("/api/")) {
     return handleApi(request, env, url);
@@ -45,7 +60,7 @@ export async function handleRequest(request, env) {
   return securityHeaders(
     withHeaders(json({ error: "NOT_FOUND" }, { status: 404 }), {
       "Content-Type": "application/json; charset=utf-8",
-    }),
+    })
   );
 }
 

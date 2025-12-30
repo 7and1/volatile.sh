@@ -1,0 +1,13 @@
+# volatile.sh robots.txt
+# https://volatile.sh/
+
+User-agent: *
+Allow: /
+Crawl-delay: 1
+
+# Disallow admin/internal endpoints
+Disallow: /api/
+Disallow: /.well-known/
+
+# Sitemap location
+Sitemap: https://volatile.sh/sitemap.xml

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>volatile.sh - Zero-Knowledge Secret Sharing</title>
+    <link>https://volatile.sh/</link>
+    <description>Updates, articles, and announcements from volatile.sh - the open-source, zero-knowledge secret sharing platform with burn-after-reading security.</description>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 30 Dec 2024 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://volatile.sh/rss.xml" rel="self" type="application/rss+xml"/>
+    <image>
+      <url>https://volatile.sh/og-image.png</url>
+      <title>volatile.sh</title>
+      <link>https://volatile.sh/</link>
+      <width>144</width>
+      <height>144</height>
+    </image>
+    <copyright>Copyright 2024 volatile.sh. MIT License.</copyright>
+    <managingEditor>security@volatile.sh (volatile.sh Team)</managingEditor>
+    <webMaster>security@volatile.sh (volatile.sh Team)</webMaster>
+    <category>Technology</category>
+    <category>Security</category>
+    <category>Privacy</category>
+    <category>Encryption</category>
+    <ttl>60</ttl>
+
+    <item>
+      <title>volatile.sh v1.0.0 - Initial Public Launch</title>
+      <link>https://volatile.sh/changelog.html</link>
+      <guid isPermaLink="true">https://volatile.sh/changelog.html#v1.0.0</guid>
+      <pubDate>Mon, 30 Dec 2024 00:00:00 GMT</pubDate>
+      <description>volatile.sh is now publicly available! Zero-knowledge secret sharing with AES-256-GCM encryption, burn-after-reading functionality, flexible TTL options, rate limiting, RESTful API, fully open-source (MIT licensed), and self-hosting support via Cloudflare Workers.</description>
+      <content:encoded><![CDATA[
+        <h2>Initial Public Launch</h2>
+        <p>volatile.sh is now publicly available! Here's what we're launching with:</p>
+        <ul>
+          <li>Zero-knowledge secret sharing with AES-256-GCM encryption</li>
+          <li>Burn-after-reading functionality</li>
+          <li>Flexible TTL options (5 minutes to 7 days)</li>
+          <li>Rate limiting to prevent abuse</li>
+          <li>RESTful API for programmatic access</li>
+          <li>Fully open-source (MIT licensed)</li>
+          <li>Self-hosting support via Cloudflare Workers</li>
+        </ul>
+        <p>Read more at <a href="https://volatile.sh/changelog.html">the changelog</a>.</p>
+      ]]></content:encoded>
+      <category>Release</category>
+      <category>Announcement</category>
+    </item>
+
+    <item>
+      <title>Understanding Zero-Knowledge Architecture (Coming Soon)</title>
+      <link>https://volatile.sh/blog.html</link>
+      <guid isPermaLink="false">blog-zero-knowledge-architecture</guid>
+      <pubDate>Sat, 28 Dec 2024 00:00:00 GMT</pubDate>
+      <description>A comprehensive guide to zero-knowledge proofs and how they enable truly private services. Learn how URL fragments, client-side encryption, and ephemeral storage combine to create systems where the provider literally cannot access user data.</description>
+      <category>Technical</category>
+      <category>Encryption</category>
+    </item>
+
+    <item>
+      <title>AES-256-GCM Explained: Why This Encryption Standard? (Coming Soon)</title>
+      <link>https://volatile.sh/blog.html</link>
+      <guid isPermaLink="false">blog-aes-256-gcm-explained</guid>
+      <pubDate>Sat, 28 Dec 2024 00:00:00 GMT</pubDate>
+      <description>Deep dive into AES-256-GCM: why we chose it, how authenticated encryption works, and why the GCM mode matters for integrity.</description>
+      <category>Security</category>
+      <category>Cryptography</category>
+    </item>
+
+    <item>
+      <title>Comparing Secret Sharing: PrivNote vs volatile.sh (Coming Soon)</title>
+      <link>https://volatile.sh/comparison.html</link>
+      <guid isPermaLink="false">blog-comparison-privnote</guid>
+      <pubDate>Sat, 28 Dec 2024 00:00:00 GMT</pubDate>
+      <description>An in-depth comparison of popular secret-sharing services. We'll analyze encryption models, data retention policies, open-source status, self-hosting options, and trust requirements.</description>
+      <category>Comparison</category>
+      <category>Security</category>
+    </item>
+
+  </channel>
+</rss>
