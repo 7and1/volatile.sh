@@ -5,33 +5,13 @@ on:
     branches:
       - main
   workflow_dispatch:
-    inputs:
-      environment:
-        description: "Deployment environment"
-        required: true
-        default: "production"
-        type: choice
-        options:
-          - staging
-          - production
-
-# Ensure only one deployment runs at a time
-concurrency:
-  group: deploy-${{ github.ref }}
-  cancel-in-progress: false
 
 jobs:
-  test:
-    uses: ./.github/workflows/test.yml
-
   deploy:
     runs-on: ubuntu-latest
     name: Deploy
-    needs: test
-    environment: ${{ github.event.inputs.environment || 'production' }}
-
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -40,73 +20,55 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm install
+          npm run install:front
 
       - name: Build frontend
         run: npm run build:front
 
-      - name: Create wrangler.toml from template
+      - name: Create wrangler.toml
+        env:
+          CF_KV_ID: ${{ secrets.CF_KV_NAMESPACE_ID }}
         run: |
-          cp wrangler.toml.example wrangler.toml
+          cat > wrangler.toml << EOF
+          name = "volatile-sh"
+          main = "src/index.js"
+          compatibility_date = "2024-12-01"
+          workers_dev = true
 
-          # Replace KV namespace IDs
-          sed -i 's/id = "YOUR_KV_NAMESPACE_ID"/id = "${{ secrets.KV_NAMESPACE_ID }}"/' wrangler.toml
-          sed -i 's/id = "YOUR_STAGING_KV_NAMESPACE_ID"/id = "${{ secrets.KV_NAMESPACE_ID_STAGING }}"/' wrangler.toml
-          sed -i 's/id = "YOUR_PRODUCTION_KV_NAMESPACE_ID"/id = "${{ secrets.KV_NAMESPACE_ID_PRODUCTION }}"/' wrangler.toml
+          [assets]
+          directory = "./dist"
+
+          [[kv_namespaces]]
+          binding = "SECURITY_KV"
+          id = "${CF_KV_ID}"
+
+          [[durable_objects.bindings]]
+          name = "SECRETS"
+          class_name = "SecretStore"
+
+          [[durable_objects.bindings]]
+          name = "RATE_LIMIT"
+          class_name = "RateLimiter"
+
+          [[migrations]]
+          tag = "v1"
+          new_classes = ["SecretStore"]
+
+          [[migrations]]
+          tag = "v2"
+          new_classes = ["RateLimiter"]
+
+          [vars]
+          ENVIRONMENT = "production"
+          LOG_LEVEL = "warn"
+          EOF
+          # Remove leading spaces from heredoc content
+          sed -i 's/^          //' wrangler.toml
 
       - name: Deploy to Cloudflare Workers
-        id: deploy
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --env ${{ github.event.inputs.environment || 'production' }}
-
-      - name: Health Check
-        run: |
-          ENV="${{ github.event.inputs.environment || 'production' }}"
-
-          if [ "$ENV" = "staging" ]; then
-            DEPLOY_URL="https://volatile-sh-staging.7and1.workers.dev"
-          else
-            DEPLOY_URL="https://volatile-sh.7and1.workers.dev"
-          fi
-
-          echo "Checking deployment health at: $DEPLOY_URL"
-          sleep 10
-
-          MAX_RETRIES=3
-          RETRY_COUNT=0
-
-          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$DEPLOY_URL/api/health" || echo "000")
-
-            if [ "$HTTP_STATUS" = "200" ]; then
-              echo "Health check passed! Status: $HTTP_STATUS"
-              exit 0
-            fi
-
-            RETRY_COUNT=$((RETRY_COUNT + 1))
-            echo "Health check attempt $RETRY_COUNT failed with status $HTTP_STATUS. Retrying..."
-            sleep 5
-          done
-
-          echo "Health check failed after $MAX_RETRIES attempts"
-          exit 1
-
-      - name: Deployment Summary
-        if: always()
-        run: |
-          ENV="${{ github.event.inputs.environment || 'production' }}"
-          if [ "${{ job.status }}" = "success" ]; then
-            echo "## Deployment Successful" >> $GITHUB_STEP_SUMMARY
-            echo "Environment: $ENV" >> $GITHUB_STEP_SUMMARY
-            if [ "$ENV" = "staging" ]; then
-              echo "URL: https://volatile-sh-staging.7and1.workers.dev" >> $GITHUB_STEP_SUMMARY
-            else
-              echo "URL: https://volatile-sh.7and1.workers.dev" >> $GITHUB_STEP_SUMMARY
-            fi
-          else
-            echo "## Deployment Failed" >> $GITHUB_STEP_SUMMARY
-            echo "Environment: $ENV" >> $GITHUB_STEP_SUMMARY
-          fi

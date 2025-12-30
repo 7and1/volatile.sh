@@ -8,6 +8,7 @@ volatile.sh-front.sh/node_modules/
 
 # Sensitive configuration files
 wrangler.toml
+!wrangler.toml.example
 .env
 .env.*
 !.env.example
