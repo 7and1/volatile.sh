@@ -135,7 +135,7 @@ const App: React.FC = () => {
                 </a>
               </nav>
               <a
-                href="https://github.com/residentialproxies/volatile.sh"
+                href="https://github.com/7and1/volatile.sh"
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center gap-2 hover:text-term-green hover:opacity-100 transition-opacity mt-2 border-b border-transparent hover:border-term-green"
