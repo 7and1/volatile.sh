@@ -618,7 +618,7 @@ export const CreateView: React.FC = () => {
           onKeyDown={handleKeyDown}
           placeholder="> INPUT_PAYLOAD_ (Ctrl+Enter to encrypt)"
           maxLength={MAX_PLAINTEXT_CHARS}
-          className="w-full min-h-[200px] max-h-[50vh] sm:max-h-[50vh] max-h-[30vh] bg-black border-2 border-term-green p-4 text-term-green font-mono text-lg resize-y placeholder-term-green/20 focus:outline-none focus:shadow-[0_0_15px_rgba(51,255,0,0.3)] transition-shadow glow-border"
+          className="w-full min-h-[280px] max-h-[60vh] sm:max-h-[60vh] bg-black border-2 border-term-green p-5 text-term-green font-mono text-xl resize-y placeholder-term-green/20 focus:outline-none focus:shadow-[0_0_15px_rgba(51,255,0,0.3)] transition-shadow glow-border"
           disabled={isLoading}
           aria-describedby="char-count keyboard-hint"
           aria-label="Secret message input"

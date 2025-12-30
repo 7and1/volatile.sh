@@ -32,7 +32,7 @@ const App: React.FC = () => {
           Skip to main content
         </a>
         <div className="min-h-screen bg-term-bg text-term-green font-mono p-4 sm:p-8 flex flex-col items-center">
-          <div className="w-full max-w-3xl relative">
+          <div className="w-full max-w-5xl relative">
             {/* Terminal Header */}
             <header className="mb-8 border-b-2 border-term-green pb-4 flex items-center justify-between glow-border border-t-0 border-l-0 border-r-0 shadow-[0_10px_20px_-10px_rgba(51,255,0,0.2)]">
               <div className="flex items-center gap-3">
@@ -40,8 +40,8 @@ const App: React.FC = () => {
                   <Terminal size={24} strokeWidth={3} />
                 </div>
                 <div>
-                  <h1 className="text-3xl font-bold leading-none tracking-tighter glow-text">
-                    volatile.sh
+                  <h1 className="text-4xl font-bold leading-none tracking-tighter glow-text">
+                    Volatile.sh
                     <span className="animate-blink" aria-hidden="true">
                       _
                     </span>
